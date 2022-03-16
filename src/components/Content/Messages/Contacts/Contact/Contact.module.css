@@ -1,0 +1,13 @@
+.contact {
+   display: block;
+}
+
+.contact a {
+   display: block;
+   border-bottom: 1px solid #ececec;
+   padding: 20px 15px;
+}
+
+.contact .activeLink {
+   background-color: rgb(247, 247, 247);
+}

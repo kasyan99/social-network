@@ -1,0 +1,22 @@
+.header {
+   /* grid-area: h; */
+   background-color: #2a2c2e;
+   height: 60px;
+}
+
+.header div {
+   height: 100%;
+   display: flex;
+   align-items: center;
+}
+
+.header img {
+   display: inline-block;
+   height: 60%;
+   margin-right: 10px;
+}
+
+.header p {
+   display: inline-block;
+   color: #61dafb;
+}

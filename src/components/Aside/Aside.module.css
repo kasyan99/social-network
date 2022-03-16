@@ -1,0 +1,23 @@
+.aside {
+   background-color: #f7f7f7;
+   border-right: 1px solid #ececec;
+   width: 200px;
+
+   display: inline-block;
+   position: relative;
+}
+
+.aside::before {
+   content: "";
+   width: 100vw;
+   height: 100%;
+   background-color: #f7f7f7;
+   position: absolute;
+   left: -100vw;
+   top: 0;
+}
+
+.aside ul {
+   list-style: none;
+   padding: 20px 10px 0 0;
+}

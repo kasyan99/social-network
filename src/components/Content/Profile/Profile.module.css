@@ -1,0 +1,28 @@
+.profile {
+   padding: 20px;
+   overflow: auto;
+}
+
+.profile h2 {
+   margin-bottom: 15px;
+   font-weight: 600;
+}
+
+.profile__describe {
+   padding-top: 0;
+   display: flex;
+   margin-bottom: 20px;
+}
+
+.profile__describe img {
+   flex: 1 1 20%;
+   height: 400px;
+   box-shadow: 0px 0px 10px #ececec;
+}
+
+.profile__describe p {
+   flex: 1 1 50%;
+   text-align: justify;
+   padding: 0px 15px;
+   padding-top: 0;
+}
