@@ -12,8 +12,7 @@ function Posts(props) {
    const newPost = React.createRef()
 
    const addPost = () => {
-      const text = newPost.current.value
-      props.addPost(text)
+      props.addPost()
    }
 
    const updateTextarea = () => {
