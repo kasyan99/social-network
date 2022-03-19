@@ -14,11 +14,9 @@ function App(props) {
       <Header />
       <Container stretch={true} element={
         <div className='page-wrap'>
-          <Aside aside={props.state.aside} />
+          <Aside aside={props.store._state.aside} />
           <Content
-            state={props.state}
-            addPost={props.addPost}
-            updatePostText={props.updatePostText}
+            store={props.store}
           />
         </div>}
       />

@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Posts.module.css';
 import Post from './Post/Post';
+import { actionCreaterAddPost, actionCreaterUpdatePostText } from '../../../../reduxF/store';
 
 function Posts(props) {
    const posts = (props) => {
@@ -12,12 +13,13 @@ function Posts(props) {
    const newPost = React.createRef()
 
    const addPost = () => {
-      props.addPost()
+      props.dispatch(actionCreaterAddPost())
    }
 
-   const updateTextarea = () => {
+   const updatePostText = () => {
       const newPostText = newPost.current.value
-      props.updatePostText(newPostText)
+      const action = actionCreaterUpdatePostText(newPostText)
+      props.dispatch(action)
    }
 
    return (
@@ -26,11 +28,11 @@ function Posts(props) {
          <div className={classes.poss__box}>
             <textarea
                ref={newPost}
-               onChange={updateTextarea}
+               onChange={updatePostText}
                placeholder="new post text..."
                value={props.profile.newPostText}
             />
-            <button onClick={addPost}>Add post</button>
+            <button onClick={addPost} className='btn'>Add post</button>
          </div>
          {posts(props)}
       </div>

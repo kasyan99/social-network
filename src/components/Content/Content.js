@@ -10,12 +10,11 @@ function Content(props) {
          <Routes>
             <Route path="/profile" element={
                <Profile
-                  profile={props.state.profile}
-                  addPost={props.addPost}
-                  updatePostText={props.updatePostText}
+                  profile={props.store._state.profile}
+                  dispatch={props.store.dispatch.bind(props.store)}
                />}
             />
-            <Route path="/messages" element={<Messages massages={props.state.massages} />} />
+            <Route path="/messages" element={<Messages massages={props.store._state.massages} dispatch={props.store.dispatch.bind(props.store)} />} />
          </Routes>
       </main>
    )

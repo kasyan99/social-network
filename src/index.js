@@ -9,16 +9,14 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 // import { addPost, updatePostText } from './reduxF/state';
 
-import store from './reduxF/state';
+import store from './reduxF/store';
 
 function render() {
   ReactDOM.render(
     <BrowserRouter>
       <React.StrictMode>
         <App
-          state={store.getState()}
-          addPost={store.addPost.bind(store)}
-          updatePostText={store.updatePostText.bind(store)}
+          store={store}
         />
       </React.StrictMode>
     </BrowserRouter>,
