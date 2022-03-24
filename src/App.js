@@ -8,16 +8,14 @@ import Footer from './components/Footer/Footer';
 
 
 
-function App(props) {
+function App() {
   return (
     <div className="app">
       <Header />
       <Container stretch={true} element={
         <div className='page-wrap'>
-          <Aside aside={props.store.getState().aside} />
-          <Content
-            store={props.store}
-          />
+          <Aside />
+          <Content />
         </div>}
       />
       <Footer />

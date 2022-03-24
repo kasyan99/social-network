@@ -7,7 +7,7 @@ function Contacts(props) {
       <div className={styles.contacts}>
          <ul className='contacts__list'>
             {props.contactsList.map(
-               contact => <Contact id={contact.id} name={contact.name} />
+               contact => <Contact id={contact.id} name={contact.name} key={contact.id} />
             )}
          </ul>
       </div>

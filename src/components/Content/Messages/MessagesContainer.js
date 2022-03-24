@@ -1,13 +1,22 @@
+import StoreContext from "../../../StoreContext";
 import Messages from "./Messages";
 
-function MessagesContainer(props) {
+function MessagesContainer() {
    return (
-      <Messages
-         dispatch={props.dispatch}
-         contactsList={props.massages.contactsList}
-         messagesList={props.massages.messagesList}
-         newMessageText={props.massages.newMessageText}
-      />
+      <StoreContext.Consumer>
+         {
+            (store) => {
+               const massages = store.getState().massages
+
+               return <Messages
+                  contactsList={massages.contactsList}
+                  messagesList={massages.messagesList}
+                  newMessageText={massages.newMessageText}
+                  dispatch={store.dispatch.bind(store)}
+               />
+            }
+         }
+      </StoreContext.Consumer>
    )
 }
 

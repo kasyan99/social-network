@@ -5,7 +5,13 @@ function MessageList(props) {
 
    const messagesList = () => {
       return props.messagesList.map(
-         message => <div className={`${styles.dialog__message} ${message.my === true ? styles.dialog__message_my : styles.dialog__message_friend}`}><p>{message.text}</p></div>
+         message =>
+            <div
+               className={`${styles.dialog__message} ${message.my === true ? styles.dialog__message_my : styles.dialog__message_friend}`}
+               key={message.id}
+            >
+               <p>{message.text}</p>
+            </div>
       )
    }
 

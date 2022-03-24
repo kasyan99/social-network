@@ -32,19 +32,19 @@ const store = {
             { id: 1, text: 'Hello', my: false },
             { id: 2, text: 'What areayou doing', my: true },
             { id: 3, text: 'Nothing', my: false },
-            { id: 3, text: 'Ok', my: true },
-            { id: 3, text: ')))))', my: false },
-            { id: 3, text: 'Bye', my: true },
+            { id: 4, text: 'Ok', my: true },
+            { id: 5, text: ')))))', my: false },
+            { id: 6, text: 'Bye', my: true },
          ],
          newMessageText: ''
       },
       aside: {
          menuList: [
-            { linkName: 'Profile', linkPath: '/profile' },
-            { linkName: 'Messages', linkPath: '/messages' },
-            { linkName: 'Photos', linkPath: '/photos' },
-            { linkName: 'Music', linkPath: '/music' },
-            { linkName: 'Settings', linkPath: '/settings' },
+            { id: 1, linkName: 'Profile', linkPath: '/profile' },
+            { id: 2, linkName: 'Messages', linkPath: '/messages' },
+            { id: 3, linkName: 'Photos', linkPath: '/photos' },
+            { id: 4, linkName: 'Music', linkPath: '/music' },
+            { id: 5, linkName: 'Settings', linkPath: '/settings' },
          ]
       }
    },

@@ -1,23 +1,34 @@
 import React from 'react';
+import StoreContext from '../../StoreContext';
 import classes from './Aside.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
 
-const menuList = (props) => {
-   return props.aside.menuList.map(
-      menuItem => <NavigationItem linkName={menuItem.linkName} linkPath={menuItem.linkPath} />
-   )
-}
 
-function Aside(props) {
-   return (
-      <aside className={classes.aside}>
-         <nav>
-            <ul>
-               {menuList(props)}
-            </ul>
-         </nav>
-      </aside>
-   )
+
+function Aside() {
+   return <StoreContext.Consumer>
+      {
+         (store) => {
+            const menuList = () => {
+               const aside = store.getState().aside
+
+               return aside.menuList.map(
+                  menuItem => <NavigationItem linkName={menuItem.linkName} linkPath={menuItem.linkPath} key={menuItem.id} />
+               )
+            }
+
+            return (
+               <aside className={classes.aside}>
+                  <nav>
+                     <ul>
+                        {menuList()}
+                     </ul>
+                  </nav>
+               </aside>
+            )
+         }
+      }
+   </StoreContext.Consumer>
 }
 
 export default Aside;

@@ -10,14 +10,15 @@ import { BrowserRouter } from 'react-router-dom';
 // import { addPost, updatePostText } from './reduxF/state';
 
 import store from './reduxF/store';
+import StoreContext from './StoreContext';
 
 function render() {
   ReactDOM.render(
     <BrowserRouter>
       <React.StrictMode>
-        <App
-          store={store}
-        />
+        <StoreContext.Provider value={store}>
+          <App />
+        </StoreContext.Provider>
       </React.StrictMode>
     </BrowserRouter>,
     document.getElementById('root')
