@@ -1,11 +1,48 @@
 import React from 'react';
 import classes from './Posts.module.css';
 import Post from './Post/Post';
-import { actionCreaterAddPost, actionCreaterUpdatePostText } from '../../../../reduxF/store';
+// import { actionCreaterAddPost, actionCreaterUpdatePostText } from '../../../../reduxF/store';
+
+// function Posts(props) {
+//    const posts = (props) => {
+//       return (props.profile.posts.map(
+//          post => <Post post={post} />
+//       ))
+//    }
+
+//    const newPost = React.createRef()
+
+//    const addPost = () => {
+//       props.dispatch(actionCreaterAddPost())
+//    }
+
+//    const updatePostText = () => {
+//       const newPostText = newPost.current.value
+//       const action = actionCreaterUpdatePostText(newPostText)
+//       props.dispatch(action)
+//    }
+
+//    return (
+//       <div className={classes.posts}>
+//          <h3>My posts</h3>
+//          <div className={classes.poss__box}>
+//             <textarea
+//                ref={newPost}
+//                onChange={updatePostText}
+//                placeholder="new post text..."
+//                value={props.profile.newPostText}
+//             />
+//             <button onClick={addPost} className='btn'>Add post</button>
+//          </div>
+//          {posts(props)}
+//       </div>
+//    )
+// }
 
 function Posts(props) {
-   const posts = (props) => {
-      return (props.profile.posts.map(
+
+   const posts = () => {
+      return (props.posts.map(
          post => <Post post={post} />
       ))
    }
@@ -13,13 +50,12 @@ function Posts(props) {
    const newPost = React.createRef()
 
    const addPost = () => {
-      props.dispatch(actionCreaterAddPost())
+      props.addPost()
    }
 
    const updatePostText = () => {
       const newPostText = newPost.current.value
-      const action = actionCreaterUpdatePostText(newPostText)
-      props.dispatch(action)
+      props.updatePostText(newPostText)
    }
 
    return (
@@ -30,7 +66,7 @@ function Posts(props) {
                ref={newPost}
                onChange={updatePostText}
                placeholder="new post text..."
-               value={props.profile.newPostText}
+               value={props.newPostText}
             />
             <button onClick={addPost} className='btn'>Add post</button>
          </div>

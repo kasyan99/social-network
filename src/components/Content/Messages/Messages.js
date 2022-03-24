@@ -6,8 +6,12 @@ import Dialog from './Dialog/Dialog'
 function Messages(props) {
    return (
       <div className={styles.messages}>
-         <Contacts contactsList={props.massages.contactsList} />
-         <Dialog dispatch={props.dispatch} massages={props.massages} />
+         <Contacts contactsList={props.contactsList} />
+         <Dialog
+            dispatch={props.dispatch}
+            messagesList={props.messagesList}
+            newMessageText={props.newMessageText}
+         />
       </div>
    )
 }

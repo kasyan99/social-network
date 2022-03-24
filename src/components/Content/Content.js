@@ -1,7 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import styles from './Content.module.css';
-import Messages from './Messages/Messages';
+// import Messages from './Messages/Messages';
+import MessagesContainer from './Messages/MessagesContainer';
 import Profile from './Profile/Profile';
 
 function Content(props) {
@@ -14,7 +15,13 @@ function Content(props) {
                   dispatch={props.store.dispatch.bind(props.store)}
                />}
             />
-            <Route path="/messages" element={<Messages massages={props.store._state.massages} dispatch={props.store.dispatch.bind(props.store)} />} />
+            {/* <Route path="/messages" element={<Messages massages={props.store.getState().massages} dispatch={props.store.dispatch.bind(props.store)} />} /> */}
+            <Route path="/messages"
+               element={<MessagesContainer
+                  massages={props.store.getState().massages}
+                  dispatch={props.store.dispatch.bind(props.store)}
+               />}
+            />
          </Routes>
       </main>
    )

@@ -6,8 +6,8 @@ import MessageList from './MessageList/MessageList';
 function Dialog(props) {
    return (
       <div className={styles.dialog}>
-         <MessageList messagesList={props.massages.messagesList} />
-         <DialogForm dispatch={props.dispatch} newMessageText={props.massages.newMessageText} />
+         <MessageList messagesList={props.messagesList} />
+         <DialogForm dispatch={props.dispatch} newMessageText={props.newMessageText} />
       </div>
    )
 }

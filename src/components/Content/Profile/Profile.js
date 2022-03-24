@@ -1,5 +1,6 @@
 import React from 'react';
-import Posts from './Posts/Posts';
+// import Posts from './Posts/Posts';
+import PostsContainer from './Posts/PostsContainer';
 import classes from './Profile.module.css';
 
 function Profile(props) {
@@ -14,7 +15,7 @@ function Profile(props) {
 
                Married to Mrs Olena Zelenska, with 2 children - daughter Oleksandra and son Kyrylo.</p>
          </div>
-         <Posts
+         <PostsContainer
             profile={props.profile}
             dispatch={props.dispatch}
          />
