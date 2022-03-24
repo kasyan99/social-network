@@ -1,5 +1,5 @@
 import React from 'react';
-import { actionCreaterAddMessage, actionCreaterUpdateMessageText } from '../../../../../reduxF/store';
+import { actionCreaterAddMessage, actionCreaterUpdateMessageText } from '../../../../../reduxF/messsages-reducer';
 import styles from './DialogForm.module.css';
 
 

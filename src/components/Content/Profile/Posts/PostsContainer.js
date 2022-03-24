@@ -1,5 +1,5 @@
 import React from 'react';
-import { actionCreaterAddPost, actionCreaterUpdatePostText } from '../../../../reduxF/store';
+import { actionCreaterAddPost, actionCreaterUpdatePostText } from '../../../../reduxF/profile-reducer';
 import StoreContext from '../../../../StoreContext';
 import Posts from './Posts';
 

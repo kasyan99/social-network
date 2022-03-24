@@ -2,12 +2,6 @@ import asideReducer from "./aside-reducer"
 import messagesReducer from "./messsages-reducer"
 import profileReducer from "./profile-reducer"
 
-const ADD_POST = 'ADD-POST'
-const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT'
-
-const ADD_MESSAGE = 'ADD-MESSAGE'
-const UPDATE_MESSAGE_TEXT = 'UPDATE-MESSAGE-TEXT'
-
 const store = {
 
    _state: {
@@ -67,12 +61,6 @@ const store = {
       this._callSubscriber(this._state)
    },
 }
-
-export const actionCreaterAddPost = () => ({ type: ADD_POST })
-export const actionCreaterUpdatePostText = (newPostText) => ({ type: UPDATE_POST_TEXT, newPostText })
-
-export const actionCreaterAddMessage = () => ({ type: ADD_MESSAGE })
-export const actionCreaterUpdateMessageText = (newMessageText) => ({ type: UPDATE_MESSAGE_TEXT, newMessageText })
 
 export default store
 

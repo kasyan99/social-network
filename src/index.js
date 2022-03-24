@@ -9,7 +9,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 // import { addPost, updatePostText } from './reduxF/state';
 
-import store from './reduxF/store';
+import store from './reduxF/redux-store';
 import StoreContext from './StoreContext';
 
 function render() {
@@ -27,7 +27,10 @@ function render() {
 
 render(store.getState())
 
-store.subscribe(render)
+store.subscribe(() => {
+  const state = store.getState()
+  render(state)
+})
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

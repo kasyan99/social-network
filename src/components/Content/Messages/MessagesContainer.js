@@ -6,12 +6,13 @@ function MessagesContainer() {
       <StoreContext.Consumer>
          {
             (store) => {
-               const massages = store.getState().massages
+               console.log(store.getState());
+               const messages = store.getState().messages
 
                return <Messages
-                  contactsList={massages.contactsList}
-                  messagesList={massages.messagesList}
-                  newMessageText={massages.newMessageText}
+                  contactsList={messages.contactsList}
+                  messagesList={messages.messagesList}
+                  newMessageText={messages.newMessageText}
                   dispatch={store.dispatch.bind(store)}
                />
             }
