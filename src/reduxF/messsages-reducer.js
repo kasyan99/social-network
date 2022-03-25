@@ -27,11 +27,15 @@ function messagesReducer(state = initialState, action) {
          text: state.newMessageText,
          my: true
       }
-
-      state.messagesList.push(message)
-      state.newMessageText = ''
+      const newState = { ...state }
+      newState.messagesList = [...state.messagesList]
+      newState.messagesList.push(message)
+      newState.newMessageText = ''
+      return newState
    } else if (action.type === UPDATE_MESSAGE_TEXT) {
-      state.newMessageText = action.newMessageText
+      const newState = { ...state }
+      newState.newMessageText = action.newMessageText
+      return newState
    }
 
    return state

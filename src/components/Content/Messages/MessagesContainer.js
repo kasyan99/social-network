@@ -1,4 +1,5 @@
-// import Messages from "./Messages";
+import { connect } from "react-redux";
+import Messages from "./Messages";
 
 // function MessagesContainer() {
 //    return (
@@ -19,4 +20,24 @@
 //    )
 // }
 
-// export default MessagesContainer
+const mapStateToProps = (state) => {
+   const messages = state.messages
+
+   return {
+      contactsList: messages.contactsList,
+      messagesList: messages.messagesList,
+      newMessageText: messages.newMessageText
+   }
+}
+
+const mapDispatchToProps = (dispatch) => {
+   return {
+      dispatch: (action) => {
+         dispatch(action)
+      }
+   }
+}
+
+const MessagesContainer = connect(mapStateToProps, mapDispatchToProps)(Messages)
+
+export default MessagesContainer
