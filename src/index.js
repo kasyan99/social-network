@@ -10,27 +10,19 @@ import { BrowserRouter } from 'react-router-dom';
 // import { addPost, updatePostText } from './reduxF/state';
 
 import store from './reduxF/redux-store';
-import StoreContext from './StoreContext';
+import { Provider } from 'react-redux';
 
-function render() {
-  ReactDOM.render(
-    <BrowserRouter>
-      <React.StrictMode>
-        <StoreContext.Provider value={store}>
-          <App />
-        </StoreContext.Provider>
-      </React.StrictMode>
-    </BrowserRouter>,
-    document.getElementById('root')
-  );
-}
+ReactDOM.render(
+  <BrowserRouter>
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>
+  </BrowserRouter>,
+  document.getElementById('root')
+);
 
-render(store.getState())
-
-store.subscribe(() => {
-  const state = store.getState()
-  render(state)
-})
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
