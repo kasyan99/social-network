@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import Container from './components/Container/Container';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
+import AsideContainer from './components/Aside/AsideContainer';
 
 
 
@@ -15,6 +16,7 @@ function App() {
       <Container stretch={true} element={
         <div className='page-wrap'>
           {/* <Aside /> */}
+          <AsideContainer />
           <Content />
         </div>}
       />
