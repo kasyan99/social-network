@@ -11,7 +11,6 @@ function DialogForm(props) {
 
    function updateMessageText(e) {
       const newMessageText = e.target.value
-      console.log(newMessageText);
       props.dispatch(actionCreaterUpdateMessageText(newMessageText))
    }
 

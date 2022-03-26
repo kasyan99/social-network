@@ -20,25 +20,45 @@ const initialState = {
    newMessageText: ''
 }
 
-function messagesReducer(state = initialState, action) {
-   if (action.type === ADD_MESSAGE) {
-      const message = {
-         id: 6,
-         text: state.newMessageText,
-         my: true
-      }
-      const newState = { ...state }
-      newState.messagesList = [...state.messagesList]
-      newState.messagesList.push(message)
-      newState.newMessageText = ''
-      return newState
-   } else if (action.type === UPDATE_MESSAGE_TEXT) {
-      const newState = { ...state }
-      newState.newMessageText = action.newMessageText
-      return newState
-   }
+// function messagesReducer(state = initialState, action) {
+//    const stateCopy = { ...state }
+//    if (action.type === ADD_MESSAGE) {
+//       const message = {
+//          id: 6,
+//          text: state.newMessageText,
+//          my: true
+//       }
+//       stateCopy.messagesList = [...state.messagesList]
+//       stateCopy.messagesList.push(message)
+//       stateCopy.newMessageText = ''
+//    } else if (action.type === UPDATE_MESSAGE_TEXT) {
+//       stateCopy.newMessageText = action.newMessageText
+//    }
 
-   return state
+//    return stateCopy
+// }
+
+function messagesReducer(state = initialState, action) {
+   switch (action.type) {
+      case ADD_MESSAGE:
+         const message = {
+            id: 6,
+            text: state.newMessageText,
+            my: true
+         }
+         return {
+            ...state,
+            messagesList: [...state.messagesList, message],
+            newMessageText: ''
+         }
+      case UPDATE_MESSAGE_TEXT:
+         return {
+            ...state,
+            newMessageText: action.newMessageText
+         }
+      default:
+         return state
+   }
 }
 
 export const actionCreaterAddMessage = () => ({ type: ADD_MESSAGE })
