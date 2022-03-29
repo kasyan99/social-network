@@ -61,7 +61,7 @@ function messagesReducer(state = initialState, action) {
    }
 }
 
-export const actionCreaterAddMessage = () => ({ type: ADD_MESSAGE })
-export const actionCreaterUpdateMessageText = (newMessageText) => ({ type: UPDATE_MESSAGE_TEXT, newMessageText })
+export const actionCreatorAddMessage = () => ({ type: ADD_MESSAGE })
+export const actionCreatorUpdateMessageText = (newMessageText) => ({ type: UPDATE_MESSAGE_TEXT, newMessageText })
 
 export default messagesReducer

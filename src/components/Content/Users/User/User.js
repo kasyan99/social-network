@@ -1,5 +1,4 @@
 import React from "react"
-import { actionCreatorFollowt, actionCreatorUnfollow } from "../../../../reduxF/users-reducer";
 import classes from './User.module.css'
 
 function User(props) {
@@ -12,10 +11,9 @@ function User(props) {
             <button
                className={`btn ${user.followed ? classes.unfollow : classes.follow}`}
                onClick={() => {
-                  const actionCreator = user.followed ? actionCreatorUnfollow : actionCreatorFollowt
-                  console.log('user', props.user.id);
-
-                  props.dispatch(actionCreator(props.user.id))
+                  user.followed
+                     ? props.unfollow(user.id)
+                     : props.follow(user.id)
                }}
             >
                {user.followed ? 'Unfollow' : 'Follow'}

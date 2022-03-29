@@ -12,13 +12,14 @@ import { BrowserRouter } from 'react-router-dom';
 import store from './reduxF/redux-store';
 import { Provider } from 'react-redux';
 
+window.state = store.getState()
 ReactDOM.render(
   <BrowserRouter>
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    <Provider store={store}>
+      <App />
+    </Provider>
+    {/* </React.StrictMode> */}
   </BrowserRouter>,
   document.getElementById('root')
 );

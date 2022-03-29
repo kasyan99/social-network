@@ -1,17 +1,17 @@
 import React from 'react';
-import { actionCreaterAddMessage, actionCreaterUpdateMessageText } from '../../../../../reduxF/messsages-reducer';
+import { actionCreatorAddMessage, actionCreatorUpdateMessageText } from '../../../../../reduxF/messsages-reducer';
 import styles from './DialogForm.module.css';
 
 
 
 function DialogForm(props) {
    function sendMessage() {
-      props.dispatch(actionCreaterAddMessage())
+      props.dispatch(actionCreatorAddMessage())
    }
 
    function updateMessageText(e) {
       const newMessageText = e.target.value
-      props.dispatch(actionCreaterUpdateMessageText(newMessageText))
+      props.dispatch(actionCreatorUpdateMessageText(newMessageText))
    }
 
    return (
