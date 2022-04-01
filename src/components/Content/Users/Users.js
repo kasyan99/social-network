@@ -1,28 +1,56 @@
 import React from "react"
 import User from "./User/User"
 import classes from './Users.module.css'
+import * as axios from 'axios'
 
-
-function Users(props) {
-   if (props.usersList.length === 0) {
-      props.setUsers([
-         { id: 1, fullName: 'Nikolay', status: 'I am loking for a job', location: { city: 'Yellow Water', country: 'Ukraine' }, followed: true },
-         { id: 2, fullName: 'Nikita', status: 'I sell grass', location: { city: 'Kyiv', country: 'Ukraine' }, followed: false },
-         { id: 3, fullName: 'Yana', status: 'I will become an engineer', location: { city: 'Trier', country: 'German' }, followed: true },
-         { id: 4, fullName: 'Yosyp', status: 'Potato is gold', location: { city: 'Cheremyshka', country: 'Belorysia' }, followed: false },
-      ])
+class Users extends React.Component {
+   componentDidMount() {
+      axios
+         .get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`)
+         .then(response => {
+            console.log(response);
+            this.props.setUsers(response.data)
+            this.props.setTotalUsersCount(response.headers['x-total-count'])
+         })
    }
-   return (
-      <div className={classes.users}>
-         {props.usersList.map(user =>
-            <User
-               user={user}
-               key={user.id}
-               follow={props.follow}
-               unfollow={props.unfollow}
-            />)}
-      </div>
-   )
-}
+   setCurrentPage(number) {
+      this.props.setCurrentPage(number)
+      axios
+         .get(`http://localhost:3000/users?_page=${number}&_limit=${this.props.pageSize}`)
+         .then(response => {
+            this.props.setUsers(response.data)
+         })
+   }
+   render() {
+      const pageCount = Math.ceil(this.props.usersCount / this.props.pageSize)
+      const pageNumbers = []
 
+      for (let i = 1; i <= pageCount; i++) {
+         pageNumbers.push(i)
+      }
+
+      return (
+         <div className={classes.users}>
+            <div>
+               {pageNumbers.map(number =>
+                  <span
+                     className={this.props.currentPage === number ? classes.selectedPage : ''}
+                     key={number}
+                     onClick={() => this.setCurrentPage(number)}
+                  >
+                     {number}
+                  </span>
+               )}
+            </div>
+            {this.props.usersList.map(user =>
+               <User
+                  user={user}
+                  key={user.id}
+                  follow={this.props.follow}
+                  unfollow={this.props.unfollow}
+               />)}
+         </div>
+      )
+   }
+}
 export default Users
