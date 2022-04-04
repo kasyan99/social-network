@@ -1,7 +1,7 @@
 import React from "react"
+import Preloader from "../../common/Preloader"
 import User from "./User/User"
 import classes from './Users.module.css'
-import preloader from '../../../assets/img/loader.svg'
 
 const Users = (props) => {
    const pageCount = Math.ceil(props.usersCount / props.pageSize)
@@ -27,7 +27,7 @@ const Users = (props) => {
          </div>
 
          {props.isFetching
-            ? <div className={classes.loader}><img src={preloader} alt="loading" /></div>
+            ? <Preloader />
             : props.usersList.map(user =>
                <User
                   user={user}

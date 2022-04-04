@@ -58,6 +58,6 @@ export const actionCreatorFollowt = (userId) => ({ type: FOLLOW, id: userId })
 export const actionCreatorUnfollow = (userId) => ({ type: UNFOLLOW, id: userId })
 export const actionCreatorCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
 export const actionCreatorSetTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount })
-export const actionCreatorToggleFetch = (isFetching) => ({ type: TOGGLE_FETCH, isFetching })
+export const actionCreatortoggleIsFetching = (isFetching) => ({ type: TOGGLE_FETCH, isFetching })
 
 export default usersReducer

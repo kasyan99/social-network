@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { actionCreatorCurrentPage, actionCreatorFollowt, actionCreatorSetUsers, actionCreatorUnfollow, actionCreatorSetTotalUsersCount, actionCreatorToggleFetch } from "../../../reduxF/users-reducer";
+import { actionCreatorCurrentPage, actionCreatorFollowt, actionCreatorSetUsers, actionCreatorUnfollow, actionCreatorSetTotalUsersCount, actionCreatortoggleIsFetching } from "../../../reduxF/users-reducer";
 import Users from "./Users";
 import React from "react"
 import * as axios from 'axios'
@@ -7,22 +7,22 @@ import * as axios from 'axios'
 class UsersAJAXContainer extends React.Component {
 
    componentDidMount() {
-      this.props.toggleFetch(true)
+      this.props.toggleIsFetching(true)
       axios
          .get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`)
          .then(response => {
-            this.props.toggleFetch(false)
+            this.props.toggleIsFetching(false)
             this.props.setUsers(response.data)
             this.props.setTotalUsersCount(response.headers['x-total-count'])
          })
    }
    setCurrentPage = number => {
-      this.props.toggleFetch(true)
       this.props.setCurrentPage(number)
+      this.props.toggleIsFetching(true)
       axios
          .get(`http://localhost:3000/users?_page=${number}&_limit=${this.props.pageSize}`)
          .then(response => {
-            this.props.toggleFetch(false)
+            this.props.toggleIsFetching(false)
             this.props.setUsers(response.data)
          })
    }
@@ -50,27 +50,36 @@ const mapStateToProps = (state) => {
    }
 }
 
-const mapDispatchToProps = (dispatch) => {
-   return {
-      follow: (userId) => {
-         dispatch(actionCreatorFollowt(userId))
-      },
-      unfollow: (userId) => {
-         dispatch(actionCreatorUnfollow(userId))
-      },
-      setUsers: (usersList) => {
-         dispatch(actionCreatorSetUsers(usersList))
-      },
-      setCurrentPage: (currentPage) => {
-         dispatch(actionCreatorCurrentPage(currentPage))
-      },
-      setTotalUsersCount: (totalUsersCount) => {
-         dispatch(actionCreatorSetTotalUsersCount(totalUsersCount))
-      },
-      toggleFetch: (isFetching) => {
-         dispatch(actionCreatorToggleFetch(isFetching))
-      }
-   }
+// const mapDispatchToProps = (dispatch) => {
+//    return {
+//       follow: (userId) => {
+//          dispatch(actionCreatorFollowt(userId))
+//       },
+//       unfollow: (userId) => {
+//          dispatch(actionCreatorUnfollow(userId))
+//       },
+//       setUsers: (usersList) => {
+//          dispatch(actionCreatorSetUsers(usersList))
+//       },
+//       setCurrentPage: (currentPage) => {
+//          dispatch(actionCreatorCurrentPage(currentPage))
+//       },
+//       setTotalUsersCount: (totalUsersCount) => {
+//          dispatch(actionCreatorSetTotalUsersCount(totalUsersCount))
+//       },
+//       toggleIsFetching: (isFetching) => {
+//          dispatch(actionCreatortoggleIsFetching(isFetching))
+//       }
+//    }
+// }
+
+const mapDispatchToProps = {
+   follow: actionCreatorFollowt,
+   unfollow: actionCreatorUnfollow,
+   setUsers: actionCreatorSetUsers,
+   setCurrentPage: actionCreatorCurrentPage,
+   setTotalUsersCount: actionCreatorSetTotalUsersCount,
+   toggleIsFetching: actionCreatortoggleIsFetching
 }
 
 const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAJAXContainer)
