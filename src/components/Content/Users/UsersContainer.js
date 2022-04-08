@@ -15,6 +15,7 @@ class UsersAJAXContainer extends React.Component {
             this.props.setUsers(response.data)
             this.props.setTotalUsersCount(response.headers['x-total-count'])
          })
+
    }
    setCurrentPage = number => {
       this.props.setCurrentPage(number)

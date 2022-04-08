@@ -6,6 +6,7 @@
 
 .header div {
    height: 100%;
+   width: 100%;
    display: flex;
    align-items: center;
 }
@@ -18,5 +19,21 @@
 
 .header p {
    display: inline-block;
+   color: #61dafb;
+}
+
+.header__row{
+   display: flex;
+   justify-content:space-between;
+   text-align: center;
+}
+
+.header__col:last-child{
+   text-align: right;
+   color: #61dafb;
+   justify-content: flex-end;
+}
+
+.login{
    color: #61dafb;
 }

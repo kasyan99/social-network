@@ -10,7 +10,9 @@ function Content() {
    return (
       <main className={styles.content}>
          <Routes>
-            <Route path="/profile/*" element={<ProfileContainer />} />
+            <Route path="/profile/*">
+               <Route path=":userId" element={<ProfileContainer />} />
+            </Route>
             <Route path="/messages/*" element={<MessagesContainer />} />
             <Route path="/users/*" element={<UsersContainer />} />
          </Routes>

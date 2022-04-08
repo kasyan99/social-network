@@ -3,16 +3,21 @@ import Profile from "./Profile";
 import axios from "axios"
 import { connect } from "react-redux";
 import { setUserProfile } from "../../../reduxF/profile-reducer";
+import { useParams } from 'react-router-dom';
 
+
+
+const ProfileById = () => {
+   let { userId } = useParams();
+   return <ProfileContainerConnected userId={userId} />
+}
 
 class ProfileContainer extends React.Component {
 
    componentDidMount() {
       axios
-         .get(`http://localhost:3000/users?id=1`)
+         .get(`http://localhost:3000/users?id=${this.props.userId}`)
          .then(response => {
-            console.log('props', this.props);
-            console.log('data', response.data[0]);
             this.props.setUserProfile(response.data[0])
          })
    }
@@ -26,4 +31,5 @@ const mapStateToProps = state => ({
    profile: state.profile.profile
 })
 
-export default connect(mapStateToProps, { setUserProfile })(ProfileContainer)
+const ProfileContainerConnected = connect(mapStateToProps, { setUserProfile })(ProfileContainer)
+export default ProfileById
