@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { actionCreatorCurrentPage, actionCreatorFollowt, actionCreatorSetUsers, actionCreatorUnfollow, actionCreatorSetTotalUsersCount, actionCreatortoggleIsFetching } from "../../../reduxF/users-reducer";
+import { actionCreatorCurrentPage, actionCreatorFollowt, actionCreatorSetUsers, actionCreatorUnfollow, actionCreatorSetTotalUsersCount, actionCreatorToggleIsFetching, actionCreatorToggleIsFollowing } from "../../../reduxF/users-reducer";
 import Users from "./Users";
 import React from "react"
 // import * as axios from 'axios'
@@ -38,6 +38,8 @@ class UsersAJAXContainer extends React.Component {
          follow={this.props.follow}
          unfollow={this.props.unfollow}
          isFetching={this.props.isFetching}
+         toggleIsFollowing={this.props.toggleIsFollowing}
+         followingInProgress={this.props.followingInProgress}
       />
    }
 }
@@ -48,7 +50,8 @@ const mapStateToProps = (state) => {
       pageSize: state.users.pageSize,
       usersCount: state.users.usersCount,
       currentPage: state.users.currentPage,
-      isFetching: state.users.isFetching
+      isFetching: state.users.isFetching,
+      followingInProgress: state.users.followingInProgress
    }
 }
 
@@ -70,7 +73,7 @@ const mapStateToProps = (state) => {
 //          dispatch(actionCreatorSetTotalUsersCount(totalUsersCount))
 //       },
 //       toggleIsFetching: (isFetching) => {
-//          dispatch(actionCreatortoggleIsFetching(isFetching))
+//          dispatch(actionCreatorToggleIsFetching(isFetching))
 //       }
 //    }
 // }
@@ -81,7 +84,8 @@ const mapDispatchToProps = {
    setUsers: actionCreatorSetUsers,
    setCurrentPage: actionCreatorCurrentPage,
    setTotalUsersCount: actionCreatorSetTotalUsersCount,
-   toggleIsFetching: actionCreatortoggleIsFetching
+   toggleIsFetching: actionCreatorToggleIsFetching,
+   toggleIsFollowing: actionCreatorToggleIsFollowing
 }
 
 const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAJAXContainer)
