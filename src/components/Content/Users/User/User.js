@@ -1,8 +1,34 @@
+import axios from "axios"
 import React from "react"
 import { NavLink } from "react-router-dom"
 import classes from './User.module.css'
 
 function User(props) {
+   const unfollow = (id) => {
+      axios
+         .patch(`http://localhost:3000/users/${id}`, {
+            followed: false
+         })
+         .then(response => {
+            console.log(response.data);
+            if (response.statusText === 'OK') {
+               props.unfollow(id)
+            }
+         })
+   }
+   const follow = (id) => {
+      axios
+         .patch(`http://localhost:3000/users/${id}`, {
+            followed: true
+         })
+         .then(response => {
+            console.log(response.data);
+            if (response.statusText === 'OK') {
+               props.follow(id)
+            }
+         })
+   }
+
    const user = props.user
    return (
       <div className={classes.user}>
@@ -15,8 +41,8 @@ function User(props) {
                className={`btn ${user.followed ? classes.unfollow : classes.follow}`}
                onClick={() => {
                   user.followed
-                     ? props.unfollow(user.id)
-                     : props.follow(user.id)
+                     ? unfollow(user.id)
+                     : follow(user.id)
                }}
             >
                {user.followed ? 'Unfollow' : 'Follow'}
