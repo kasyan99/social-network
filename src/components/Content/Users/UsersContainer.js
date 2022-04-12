@@ -2,29 +2,30 @@ import { connect } from "react-redux";
 import { actionCreatorCurrentPage, actionCreatorFollowt, actionCreatorSetUsers, actionCreatorUnfollow, actionCreatorSetTotalUsersCount, actionCreatortoggleIsFetching } from "../../../reduxF/users-reducer";
 import Users from "./Users";
 import React from "react"
-import * as axios from 'axios'
+// import * as axios from 'axios'
+import { usersAPI } from "../../../api/api";
 
 class UsersAJAXContainer extends React.Component {
 
    componentDidMount() {
       this.props.toggleIsFetching(true)
-      axios
-         .get(`http://localhost:3000/users?_page=${this.props.currentPage}&_limit=${this.props.pageSize}`)
+
+      usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
          .then(response => {
+            console.log(response);
             this.props.toggleIsFetching(false)
-            this.props.setUsers(response.data)
-            this.props.setTotalUsersCount(response.headers['x-total-count'])
+            this.props.setUsers(response.users)
+            this.props.setTotalUsersCount(response.totalCount)
          })
 
    }
    setCurrentPage = number => {
       this.props.setCurrentPage(number)
       this.props.toggleIsFetching(true)
-      axios
-         .get(`http://localhost:3000/users?_page=${number}&_limit=${this.props.pageSize}`)
+      usersAPI.getUsers(number, this.props.pageSize)
          .then(response => {
             this.props.toggleIsFetching(false)
-            this.props.setUsers(response.data)
+            this.props.setUsers(response.users)
          })
    }
    render() {
