@@ -1,35 +1,28 @@
-import axios from "axios"
+// import axios from "axios"
 import React from "react"
 import { NavLink } from "react-router-dom"
+// import { usersAPI } from "../../../../api/api"
 import classes from './User.module.css'
 
 function User(props) {
-   const unfollow = (id) => {
-      axios
-         .patch(`http://localhost:3000/users/${id}`, {
-            followed: false
-         })
-         .then(response => {
-            console.log(response.data);
-            if (response.statusText === 'OK') {
-               props.unfollow(id)
-            }
-            props.toggleIsFollowing(false, id)
-         })
-   }
-   const follow = (id) => {
-      axios
-         .patch(`http://localhost:3000/users/${id}`, {
-            followed: true
-         })
-         .then(response => {
-            console.log(response.data);
-            if (response.statusText === 'OK') {
-               props.follow(id)
-            }
-            props.toggleIsFollowing(false, id)
-         })
-   }
+   // const unfollow = (id) => {
+   //    usersAPI.unfollow(id).then(response => {
+   //       console.log(response.data);
+   //       if (response.statusText === 'OK') {
+   //          props.unfollow(id)
+   //       }
+   //       props.toggleIsFollowing(false, id)
+   //    })
+   // }
+   // const follow = (id) => {
+   //    usersAPI.follow(id).then(response => {
+   //       console.log(response.data);
+   //       if (response.statusText === 'OK') {
+   //          props.follow(id)
+   //       }
+   //       props.toggleIsFollowing(false, id)
+   //    })
+   // }
 
    const user = props.user
    return (
@@ -42,12 +35,13 @@ function User(props) {
             <button
                disabled={props.followingInProgress.some(id => id === user.id)}
                className={`btn ${user.followed ? classes.unfollow : classes.follow}`}
-               onClick={() => {
-                  props.toggleIsFollowing(true, user.id)
-                  user.followed
-                     ? unfollow(user.id)
-                     : follow(user.id)
-               }}
+               // onClick={() => {
+               //    props.toggleIsFollowing(true, user.id)
+               //    user.followed
+               //       ? unfollow(user.id)
+               //       : follow(user.id)
+               // }}
+               onClick={() => { props.followToggle(user) }}
             >
                {user.followed ? 'Unfollow' : 'Follow'}
             </button>

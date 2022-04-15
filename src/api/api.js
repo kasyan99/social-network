@@ -16,6 +16,16 @@ export const usersAPI = {
             }
          })
 
+   },
+   unfollow(id) {
+      return instance.patch(`users/${id}`, {
+         followed: false
+      })
+   },
+   follow(id) {
+      return instance.patch(`users/${id}`, {
+         followed: true
+      })
    }
 }
 
