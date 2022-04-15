@@ -14,7 +14,7 @@ function User(props) {
             if (response.statusText === 'OK') {
                props.unfollow(id)
             }
-            props.toggleIsFollowing(false)
+            props.toggleIsFollowing(false, id)
          })
    }
    const follow = (id) => {
@@ -27,7 +27,7 @@ function User(props) {
             if (response.statusText === 'OK') {
                props.follow(id)
             }
-            props.toggleIsFollowing(false)
+            props.toggleIsFollowing(false, id)
          })
    }
 
@@ -40,10 +40,10 @@ function User(props) {
             </NavLink>
 
             <button
-               disabled={props.followingInProgress}
+               disabled={props.followingInProgress.some(id => id === user.id)}
                className={`btn ${user.followed ? classes.unfollow : classes.follow}`}
                onClick={() => {
-                  props.toggleIsFollowing(true)
+                  props.toggleIsFollowing(true, user.id)
                   user.followed
                      ? unfollow(user.id)
                      : follow(user.id)
