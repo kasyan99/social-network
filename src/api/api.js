@@ -26,6 +26,14 @@ export const usersAPI = {
       return instance.patch(`users/${id}`, {
          followed: true
       })
+   },
+   getProfileInfo(userId) {
+      return instance.get(`users?id=${userId}`).then(response => response.data[0])
    }
 }
 
+export const authAPI = {
+   me() {
+      return instance.get(`auth`)
+   }
+}

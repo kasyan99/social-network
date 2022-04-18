@@ -1,9 +1,11 @@
 import React from "react";
 import Profile from "./Profile";
-import axios from "axios"
+// import axios from "axios"
 import { connect } from "react-redux";
-import { setUserProfile } from "../../../reduxF/profile-reducer";
+import { getUserProfilThunkCreator } from "../../../reduxF/profile-reducer";
+// import {  setUserProfile } from "../../../reduxF/profile-reducer";
 import { useParams } from 'react-router-dom';
+// import { usersAPI } from "../../../api/api";
 
 
 
@@ -15,11 +17,16 @@ const ProfileById = () => {
 class ProfileContainer extends React.Component {
 
    componentDidMount() {
-      axios
-         .get(`http://localhost:3000/users?id=${this.props.userId}`)
-         .then(response => {
-            this.props.setUserProfile(response.data[0])
-         })
+      // axios
+      //    .get(`http://localhost:3000/users?id=${this.props.userId}`)
+      //    .then(response => {
+      //       this.props.setUserProfile(response.data[0])
+      //    })
+
+      // usersAPI.getProfileInfo(this.props.userId)
+      //    .then(profileInfo => { this.props.setUserProfile(profileInfo) })
+
+      this.props.getUserProfilThunkCreator(this.props.userId)
    }
 
    render() {
@@ -31,5 +38,6 @@ const mapStateToProps = state => ({
    profile: state.profile.profile
 })
 
-const ProfileContainerConnected = connect(mapStateToProps, { setUserProfile })(ProfileContainer)
+// const ProfileContainerConnected = connect(mapStateToProps, { setUserProfile })(ProfileContainer)
+const ProfileContainerConnected = connect(mapStateToProps, { getUserProfilThunkCreator })(ProfileContainer)
 export default ProfileById
