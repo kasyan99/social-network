@@ -8,7 +8,8 @@ const mapStateToProps = (state) => {
    return {
       contactsList: messages.contactsList,
       messagesList: messages.messagesList,
-      newMessageText: messages.newMessageText
+      newMessageText: messages.newMessageText,
+      isAuth: state.auth.isAuth
    }
 }
 
