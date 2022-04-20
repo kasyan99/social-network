@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getUserProfilThunkCreator } from "../../../reduxF/profile-reducer";
 // import {  setUserProfile } from "../../../reduxF/profile-reducer";
 import { Navigate, useParams } from 'react-router-dom';
+import { withAuthRedirect } from "../../../hoc/withAuthRedirect";
 // import { usersAPI } from "../../../api/api";
 
 
@@ -33,18 +34,25 @@ class ProfileContainer extends React.Component {
    }
 
    render() {
-      if (!this.props.isAuth) {
-         return <Navigate to='/login' />
-      }
+
       return <Profile {...this.props} />
    }
 }
 
+// let AuthRedirectComponent = (props) => {
+//    if (!props.isAuth) {
+//       return <Navigate to='/login' />
+//    }
+//    return <ProfileContainer {...props} />
+// }
+
+const AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+
+
 const mapStateToProps = state => ({
-   profile: state.profile.profile,
-   isAuth: state.auth.isAuth
+   profile: state.profile.profile
 })
 
 // const ProfileContainerConnected = connect(mapStateToProps, { setUserProfile })(ProfileContainer)
-const ProfileContainerConnected = connect(mapStateToProps, { getUserProfilThunkCreator })(ProfileContainer)
+const ProfileContainerConnected = connect(mapStateToProps, { getUserProfilThunkCreator })(AuthRedirectComponent)
 export default ProfileById
