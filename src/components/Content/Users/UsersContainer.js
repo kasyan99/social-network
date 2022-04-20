@@ -43,10 +43,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
    follow: actionCreatorFollowt,
    unfollow: actionCreatorUnfollow,
-   // setUsers: actionCreatorSetUsers,
    setCurrentPage: actionCreatorCurrentPage,
-   // setTotalUsersCount: actionCreatorSetTotalUsersCount,
-   // toggleIsFetching: actionCreatorToggleIsFetching,
    toggleIsFollowing: actionCreatorToggleIsFollowing,
    getUsers: getUsersThunkCreator,
    followToggle: followToggleThunkCreator

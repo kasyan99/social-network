@@ -17,6 +17,7 @@ const ProfileInfo = (props) => {
                Married to Mrs Olena Zelenska, with 2 children - daughter Oleksandra and son Kyrylo.
             </p>
          </div>
+
       </div>
    )
 }

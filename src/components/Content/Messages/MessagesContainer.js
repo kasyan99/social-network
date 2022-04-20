@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { compose } from "redux";
 import { withAuthRedirect } from "../../../hoc/withAuthRedirect";
 import Messages from "./Messages";
@@ -12,7 +11,6 @@ const mapStateToProps = (state) => {
       contactsList: messages.contactsList,
       messagesList: messages.messagesList,
       newMessageText: messages.newMessageText,
-      // isAuth: state.auth.isAuth
    }
 }
 
@@ -24,14 +22,9 @@ const mapDispatchToProps = (dispatch) => {
    }
 }
 
-const AuthRedirectComponent = withAuthRedirect(Messages)
-// let AuthRedirectComponent = (props) => {
-//    if (!props.isAuth) {
-//       return <Navigate to='/login' />
-//    }
-//    return <Messages {...props} />
-// }
+const MessagesContainer = compose(
+   connect(mapStateToProps, mapDispatchToProps),
+   withAuthRedirect
+)(Messages)
 
-const MessagesContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
-
-export default MessagesContainer 
+export default MessagesContainer
