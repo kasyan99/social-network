@@ -28,7 +28,23 @@ export const usersAPI = {
       })
    },
    getProfileInfo(userId) {
+      // return instance.get(`users?id=${userId}`).then(response => response.data[0])
+      console.warn(`You should use "profileAPI"`)
+      return profileAPI.getProfileInfo(userId)
+   }
+}
+
+export const profileAPI = {
+   getProfileInfo(userId) {
       return instance.get(`users?id=${userId}`).then(response => response.data[0])
+   },
+   getStatus(userId) {
+      return instance.get(`users?id=${userId}`).then(response => response.data[0].status)
+   },
+   updateStatus(userId, status) {
+      return instance.patch(`users/${userId}`, {
+         status: status
+      })
    }
 }
 

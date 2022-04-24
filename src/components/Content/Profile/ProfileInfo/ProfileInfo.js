@@ -11,7 +11,7 @@ const ProfileInfo = (props) => {
       <div>
          {/* <h2>Volodymyr Zelensky</h2> */}
          <h2>{props.profile.fullName}</h2>
-         <ProfilStatus status='i am  fine' />
+         <ProfilStatus status={props.status} updateUserStatus={props.updateUserStatus} />
          <div className={classes.profile__describe}>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEo66CowBhbSrmRxFjfH03CPDaoF7--bUBuQ&usqp=CAU" alt='avatar'></img>
             <p>Founded “The League of laughter” NGO. Produced 10 feature length movies, won more than 30 awards of the National Television Award of Ukraine "Teletriumph”. President Zelenskyy is a prize-winner of numerous international film festivals and media forums.
