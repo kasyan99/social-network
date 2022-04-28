@@ -12,7 +12,7 @@ import { BrowserRouter } from 'react-router-dom';
 import store from './reduxF/redux-store';
 import { Provider } from 'react-redux';
 
-window.state = store.getState()
+window.store = store
 ReactDOM.render(
   <BrowserRouter>
     {/* <React.StrictMode> */}
