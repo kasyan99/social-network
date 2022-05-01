@@ -1,25 +1,20 @@
 import React from 'react';
-import { actionCreatorAddMessage, actionCreatorUpdateMessageText } from '../../../../../reduxF/messsages-reducer';
+import { Field } from 'redux-form';
+import { reduxForm } from "redux-form";
 import styles from './DialogForm.module.css';
 
 
 
-function DialogForm(props) {
-   function sendMessage() {
-      props.dispatch(actionCreatorAddMessage())
-   }
-
-   function updateMessageText(e) {
-      const newMessageText = e.target.value
-      props.dispatch(actionCreatorUpdateMessageText(newMessageText))
-   }
+const DialogForm = (props) => {
 
    return (
-      <div className={styles.dialog__form}>
-         <textarea onChange={updateMessageText} value={props.newMessageText}></textarea>
-         <button onClick={sendMessage} className='btn'>Send message</button>
-      </div>
+      <form className={styles.dialog__form} onSubmit={props.handleSubmit}>
+         <Field component={"textarea"} name={"newMessageText"} />
+         <button className='btn'>Send message</button>
+      </form>
    )
 }
 
-export default DialogForm;
+export default reduxForm({
+   form: 'messageForm'
+})(DialogForm)

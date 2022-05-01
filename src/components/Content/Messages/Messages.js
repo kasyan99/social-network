@@ -5,7 +5,6 @@ import Dialog from './Dialog/Dialog'
 import { Navigate } from 'react-router-dom';
 
 function Messages(props) {
-   console.log(props.isAuth);
 
    if (!props.isAuth) {
       return <Navigate to='/login' />
@@ -14,9 +13,8 @@ function Messages(props) {
       <div className={styles.messages}>
          <Contacts contactsList={props.contactsList} />
          <Dialog
-            dispatch={props.dispatch}
+            addMessage={props.addMessage}
             messagesList={props.messagesList}
-            newMessageText={props.newMessageText}
          />
       </div>
    )

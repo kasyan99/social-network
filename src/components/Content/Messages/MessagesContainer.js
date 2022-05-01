@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { withAuthRedirect } from "../../../hoc/withAuthRedirect";
+import { actionCreatorAddMessage } from "../../../reduxF/messsages-reducer";
 import Messages from "./Messages";
 
 
@@ -9,15 +10,14 @@ const mapStateToProps = (state) => {
 
    return {
       contactsList: messages.contactsList,
-      messagesList: messages.messagesList,
-      newMessageText: messages.newMessageText,
+      messagesList: messages.messagesList
    }
 }
 
 const mapDispatchToProps = (dispatch) => {
    return {
-      dispatch: (action) => {
-         dispatch(action)
+      addMessage: (newMessageText) => {
+         dispatch(actionCreatorAddMessage(newMessageText))
       }
    }
 }

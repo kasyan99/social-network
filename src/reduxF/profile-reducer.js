@@ -13,7 +13,6 @@ const initialState = {
       { id: 3, text: 'close the sky!', likes: 65 },
       { id: 4, text: 'go to the party!', likes: 5 },
    ],
-   newPostText: '',
    status: ''
 }
 
@@ -23,18 +22,12 @@ function profileReducer(state = initialState, action) {
       case ADD_POST:
          const post = {
             id: 6,
-            text: state.newPostText,
+            text: action.newPostText,
             likes: 0
          }
          return {
             ...state,
-            posts: [...state.posts, post],
-            newPostText: ''
-         }
-      case UPDATE_POST_TEXT:
-         return {
-            ...state,
-            newPostText: action.newPostText
+            posts: [...state.posts, post]
          }
       case SET_USER_PROFILE:
          return {
@@ -52,7 +45,7 @@ function profileReducer(state = initialState, action) {
 }
 
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
-export const actionCreatorAddPost = () => ({ type: ADD_POST })
+export const actionCreatorAddPost = (newPostText) => ({ type: ADD_POST, newPostText })
 export const actionCreatorUpdatePostText = (newPostText) => ({ type: UPDATE_POST_TEXT, newPostText })
 export const setUserStatus = (status) => ({ type: SET_USER_STATUS, status })
 
