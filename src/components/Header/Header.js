@@ -5,7 +5,6 @@ import classes from './Header.module.css';
 
 function Header(props) {
    return (
-
       <header className={classes.header}>
          <Container
             element={
@@ -16,7 +15,7 @@ function Header(props) {
                   </div>
                   <div className={classes.header__col}>
                      {props.isAuth
-                        ? props.login
+                        ? <span><span>{props.login}</span> <button onClick={props.logout}>logout</button></span>
                         : <NavLink to='/login' className={classes.login}>login</NavLink>}
                   </div>
                </div>

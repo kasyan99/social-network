@@ -50,6 +50,25 @@ export const profileAPI = {
 
 export const authAPI = {
    me() {
-      return instance.get(`auth`)
+      return instance.get(`authMe`)
+   },
+   checkLogin(email, password, rememberMe = false) {
+      return instance.get(`auth?email=${email}&password=${password}`)
+   },
+   login(id, login, email) {
+      return instance.patch('authMe', {
+         isAuth: true,
+         me: { id, login, email }
+      })
+   },
+   logout() {
+      return instance.patch('authMe', {
+         isAuth: false,
+         me: {
+            id: null,
+            login: null,
+            email: null
+         }
+      })
    }
 }

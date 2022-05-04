@@ -1,6 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { Field } from "redux-form";
 import { reduxForm } from "redux-form";
+import { loginThunkCreator } from "../../reduxF/auth-reducer";
 import { requiredField } from "../../utils/validators/validators";
 import { Element } from "../common/FormsControls/FormsControls";
 
@@ -33,8 +36,14 @@ const LoginReduxForm = reduxForm({
 
 
 const Login = (props) => {
+   console.log('login props', props);
    const onSubmit = (formData) => {
       console.log(formData);
+      props.login(formData.login, formData.password, false);
+   }
+
+   if (props.isAuth) {
+      return <Navigate to='/profile' />
    }
    return (
       <div>
@@ -44,4 +53,10 @@ const Login = (props) => {
    )
 }
 
-export default Login
+const mapStateToProps = (state) => ({
+   isAuth: state.auth.isAuth
+})
+
+export default connect(mapStateToProps, {
+   login: loginThunkCreator
+})(Login)
