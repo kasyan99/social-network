@@ -35,12 +35,6 @@ function User(props) {
             <button
                disabled={props.followingInProgress.some(id => id === user.id)}
                className={`btn ${user.followed ? classes.unfollow : classes.follow}`}
-               // onClick={() => {
-               //    props.toggleIsFollowing(true, user.id)
-               //    user.followed
-               //       ? unfollow(user.id)
-               //       : follow(user.id)
-               // }}
                onClick={() => { props.followToggle(user) }}
             >
                {user.followed ? 'Unfollow' : 'Follow'}

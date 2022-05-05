@@ -9,3 +9,7 @@
    display: inline-block;
    margin-bottom: 10px;
 }
+
+.error_common{
+   border: 1px solid red;
+}

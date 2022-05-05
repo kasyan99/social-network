@@ -31,7 +31,6 @@ class ProfilStatus extends React.Component {
             status: this.props.status
          })
       }
-      console.log('didupdate');
    }
 
    render() {
