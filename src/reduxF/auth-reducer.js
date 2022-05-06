@@ -26,7 +26,7 @@ export const actionCreatorSetAuthUserData = (id, login, email, isAuth) => ({ typ
 
 export const getAuthUserDataThunkCreator = () => {
    return (dispatch) => {
-      authAPI.me()
+      return authAPI.me()
          .then(response => {
             if (response.data.isAuth) {
                const { id, login, email } = response.data.me
