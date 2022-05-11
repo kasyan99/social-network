@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 class ProfilStatus extends React.Component {
    state = {
@@ -49,5 +49,32 @@ class ProfilStatus extends React.Component {
       )
    }
 }
+
+// const ProfilStatus = props => {
+//    console.log(props);
+//    const [editMode, setEditMode] = useState(false)
+//    const [status, setStatus] = useState(props.status)
+
+//    const activateEditMode = () => setEditMode(false)
+//    const deactivateEditMode = () => {
+//       setEditMode(true)
+//       props.updateUserStatus(status)
+//    }
+
+//    const onStatusChange = (e) => setStatus(e.target.value)
+
+//    return (
+//       <div>
+//          {editMode
+//             ? <div>
+//                <input autoFocus={true} onBlur={activateEditMode} value={status} onChange={onStatusChange} />
+//             </div>
+//             : <div>
+//                <span onClick={deactivateEditMode}>{props.status || '---'}</span>
+//             </div>
+//          }
+//       </div>
+//    )
+// }
 
 export default ProfilStatus

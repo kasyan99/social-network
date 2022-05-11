@@ -41,10 +41,15 @@ export const profileAPI = {
    getStatus(userId) {
       return instance.get(`users?id=${userId}`).then(response => response.data[0].status)
    },
-   updateStatus(userId, status) {
-      return instance.patch(`users/${userId}`, {
-         status: status
-      })
+   updateStatus(status) {
+      return authAPI.me()
+         .then((response) => response.data.me.id)
+         .then((userId) => {
+            return instance.patch(`users/${userId}`, {
+               status: status
+            })
+         })
+
    }
 }
 
