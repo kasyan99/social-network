@@ -24,7 +24,6 @@ const ProfileFormRedux = reduxForm({
    form: 'profileForm'
 })(ProfileForm)
 const Posts = (props) => {
-
    const posts = () => {
       return (props.posts.map(
          post => <Post post={post} key={post.id} />
