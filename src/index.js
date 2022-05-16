@@ -1,18 +1,15 @@
 import './reset.css'
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-// import state, { subscribe } from './reduxF/state';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-// import { addPost, updatePostText } from './reduxF/state';
-
 import store from './reduxF/redux-store';
 import { Provider } from 'react-redux';
 
 window.store = store
+
 ReactDOM.render(
   <BrowserRouter>
     {/* <React.StrictMode> */}

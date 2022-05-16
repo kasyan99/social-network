@@ -8,7 +8,6 @@ import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
 
-
    componentDidMount() {
       this.props.getUserProfilThunkCreator(this.props.userId)
       this.props.getUserStatusThunkCreator(this.props.userId)

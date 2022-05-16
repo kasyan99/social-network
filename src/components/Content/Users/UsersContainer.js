@@ -7,39 +7,22 @@ import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, get
 class UsersAJAXContainer extends React.Component {
 
    componentDidMount() {
-      this.props.getUsers(this.props.currentPage, this.props.pageSize)
+      const { currentPage, pageSize } = this.props
+      this.props.getUsers(currentPage, pageSize)
 
    }
    setCurrentPage = pageNumber => {
-      this.props.getUsers(pageNumber, this.props.pageSize)
+      const { pageSize } = this.props
+      this.props.getUsers(pageNumber, pageSize)
    }
    render() {
       return <Users
+         {...this.props}
          setCurrentPage={this.setCurrentPage}
-         currentPage={this.props.currentPage}
-         usersCount={this.props.usersCount}
-         pageSize={this.props.pageSize}
-         usersList={this.props.usersList}
-         follow={this.props.follow}
-         unfollow={this.props.unfollow}
-         isFetching={this.props.isFetching}
-         toggleIsFollowing={this.props.toggleIsFollowing}
-         followingInProgress={this.props.followingInProgress}
-         followToggle={this.props.followToggle}
       />
    }
 }
 
-// const mapStateToProps = (state) => {
-//    return {
-//       usersList: state.users.usersList,
-//       pageSize: state.users.pageSize,
-//       usersCount: state.users.usersCount,
-//       currentPage: state.users.currentPage,
-//       isFetching: state.users.isFetching,
-//       followingInProgress: state.users.followingInProgress
-//    }
-// }
 
 const mapStateToProps = (state) => {
    return {

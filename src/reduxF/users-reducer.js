@@ -1,12 +1,12 @@
 import { usersAPI } from "../api/api"
 
-const SET_USERS = 'SET-USERS'
-const FOLLOW = 'FOLLOW'
-const UNFOLLOW = 'UNFOLLOW'
-const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
-const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
-const TOGGLE_FETCH = 'TOGGLE-FETCH'
-const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE-IS-FOLLOWING-PROGRESS'
+const SET_USERS = 'social-network/users/SET-USERS'
+const FOLLOW = 'social-network/users/FOLLOW'
+const UNFOLLOW = 'social-network/users/UNFOLLOW'
+const SET_CURRENT_PAGE = 'social-network/users/SET-CURRENT-PAGE'
+const SET_TOTAL_USERS_COUNT = 'social-network/users/SET-TOTAL-USERS-COUNT'
+const TOGGLE_FETCH = 'social-network/users/TOGGLE-FETCH'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'social-network/users/TOGGLE-IS-FOLLOWING-PROGRESS'
 
 const initialState = {
    usersList: [
@@ -73,50 +73,41 @@ export const actionCreatorToggleIsFetching = (isFetching) => ({ type: TOGGLE_FET
 export const actionCreatorToggleIsFollowing = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
 
 
+export const getUsersThunkCreator = (currentPage, pageSize) => async (dispatch) => {
+   dispatch(actionCreatorCurrentPage(currentPage))
+   dispatch(actionCreatorToggleIsFetching(true))
 
+   const response = await usersAPI.getUsers(currentPage, pageSize)
 
-export const getUsersThunkCreator = (currentPage, pageSize) => {
-   return (dispatch) => {
-      dispatch(actionCreatorCurrentPage(currentPage))
-      dispatch(actionCreatorToggleIsFetching(true))
+   dispatch(actionCreatorToggleIsFetching(false))
+   dispatch(actionCreatorSetUsers(response.users))
+   dispatch(actionCreatorSetTotalUsersCount(response.totalCount))
 
-      usersAPI.getUsers(currentPage, pageSize)
-         .then(response => {
-            dispatch(actionCreatorToggleIsFetching(false))
-            dispatch(actionCreatorSetUsers(response.users))
-            dispatch(actionCreatorSetTotalUsersCount(response.totalCount))
-         })
-   }
 }
 
-const unfollowThunkCreator = (id) => {
-   return (dispatch) => {
-      usersAPI.unfollow(id).then(response => {
-         if (response.statusText === 'OK') {
-            dispatch(actionCreatorUnfollow(id))
-         }
-         dispatch(actionCreatorToggleIsFollowing(false, id))
-      })
+const unfollowThunkCreator = (id) => async (dispatch) => {
+   const response = await usersAPI.unfollow(id)
+
+   if (response.statusText === 'OK') {
+      dispatch(actionCreatorUnfollow(id))
    }
-}
-const followTnunkCreator = (id) => {
-   return (dispatch) => {
-      usersAPI.follow(id).then(response => {
-         if (response.statusText === 'OK') {
-            dispatch(actionCreatorFollowt(id))
-         }
-         dispatch(actionCreatorToggleIsFollowing(false, id))
-      })
-   }
+   dispatch(actionCreatorToggleIsFollowing(false, id))
 }
 
-export const followToggleThunkCreator = (user) => {
+const followTnunkCreator = (id) => async (dispatch) => {
+   const response = await usersAPI.follow(id)
 
-   return (dispatch) => {
-      dispatch(actionCreatorToggleIsFollowing(true, user.id))
-      user.followed
-         ? dispatch(unfollowThunkCreator(user.id))
-         : dispatch(followTnunkCreator(user.id))
+   if (response.statusText === 'OK') {
+      dispatch(actionCreatorFollowt(id))
    }
+   dispatch(actionCreatorToggleIsFollowing(false, id))
 }
+
+export const followToggleThunkCreator = (user) => (dispatch) => {
+   dispatch(actionCreatorToggleIsFollowing(true, user.id))
+   user.followed
+      ? dispatch(unfollowThunkCreator(user.id))
+      : dispatch(followTnunkCreator(user.id))
+}
+
 export default usersReducer

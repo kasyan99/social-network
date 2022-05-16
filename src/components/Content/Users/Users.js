@@ -1,42 +1,28 @@
 import React from "react"
 import Preloader from "../../common/Preloader"
+import Paginator from "./Paginator"
 import User from "./User/User"
 import classes from './Users.module.css'
 
 const Users = (props) => {
-   const pageCount = Math.ceil(props.usersCount / props.pageSize)
-   const pageNumbers = []
-
-   for (let i = 1; i <= pageCount; i++) {
-      pageNumbers.push(i)
-   }
 
    return (
-
       <div className={classes.users}>
-         <div className={classes.pages}>
-            {pageNumbers.map(number =>
-               <span
-                  className={props.currentPage === number ? classes.selectedPage : ''}
-                  key={number}
-                  onClick={() => props.setCurrentPage(number)}
-               >
-                  {number}
-               </span>
-            )}
-         </div>
+
+         <Paginator
+            usersCount={props.usersCount}
+            pageSize={props.pageSize}
+            currentPage={props.currentPage}
+            setCurrentPage={props.setCurrentPage}
+         />
 
          {props.isFetching
             ? <Preloader />
             : props.usersList.map(user =>
                <User
-                  user={user}
                   key={user.id}
-                  follow={props.follow}
-                  unfollow={props.unfollow}
-                  toggleIsFollowing={props.toggleIsFollowing}
-                  followingInProgress={props.followingInProgress}
-                  followToggle={props.followToggle}
+                  user={user}
+                  {...props}
                />)
          }
       </div >

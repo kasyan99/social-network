@@ -1,30 +1,10 @@
-// import axios from "axios"
 import React from "react"
 import { NavLink } from "react-router-dom"
-// import { usersAPI } from "../../../../api/api"
 import classes from './User.module.css'
 
 function User(props) {
-   // const unfollow = (id) => {
-   //    usersAPI.unfollow(id).then(response => {
-   //       console.log(response.data);
-   //       if (response.statusText === 'OK') {
-   //          props.unfollow(id)
-   //       }
-   //       props.toggleIsFollowing(false, id)
-   //    })
-   // }
-   // const follow = (id) => {
-   //    usersAPI.follow(id).then(response => {
-   //       console.log(response.data);
-   //       if (response.statusText === 'OK') {
-   //          props.follow(id)
-   //       }
-   //       props.toggleIsFollowing(false, id)
-   //    })
-   // }
-
    const user = props.user
+
    return (
       <div className={classes.user}>
          <div className={classes.user__header}>

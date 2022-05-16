@@ -1,6 +1,6 @@
 import { getAuthUserDataThunkCreator } from "./auth-reducer"
 
-const INITIALIZED_SUCCESS = 'INITIALIZED-SUCCESS'
+const INITIALIZED_SUCCESS = 'social-network/app/INITIALIZED-SUCCESS'
 
 const initialState = {
    initialized: false
