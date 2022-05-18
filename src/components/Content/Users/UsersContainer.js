@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { actionCreatorCurrentPage, actionCreatorFollowt, actionCreatorUnfollow, actionCreatorToggleIsFollowing, getUsersThunkCreator, followToggleThunkCreator } from "../../../reduxF/users-reducer";
 import Users from "./Users";
 import React from "react"
-import { getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getUsersCount, getUsersList } from "../../../reduxF/users-selectors";
+import { getCurrentPage, getDisplayedPagePortion, getFollowingInProgress, getIsFetching, getPageSize, getUsersCount, getUsersList } from "../../../reduxF/users-selectors";
 
 class UsersAJAXContainer extends React.Component {
 
@@ -31,7 +31,8 @@ const mapStateToProps = (state) => {
       usersCount: getUsersCount(state),
       currentPage: getCurrentPage(state),
       isFetching: getIsFetching(state),
-      followingInProgress: getFollowingInProgress(state)
+      followingInProgress: getFollowingInProgress(state),
+      displayedPagePortion: getDisplayedPagePortion(state)
    }
 }
 

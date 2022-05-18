@@ -1,9 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 import classes from './Users.module.css'
 
-const Paginator = ({ usersCount, pageSize, currentPage, setCurrentPage }) => {
+const Paginator = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion }) => {
    const pageCount = Math.ceil(usersCount / pageSize)
    const pageNumbers = []
+
+   let [currentDisplayedPage, setCurrentDisplayedPage] = useState(1)
+
+   const leftNumber = displayedPagePortion * currentDisplayedPage - displayedPagePortion
+   const rightNumber = displayedPagePortion * currentDisplayedPage
 
    for (let i = 1; i <= pageCount; i++) {
       pageNumbers.push(i)
@@ -11,15 +16,21 @@ const Paginator = ({ usersCount, pageSize, currentPage, setCurrentPage }) => {
 
    return (
       <div className={classes.pages}>
-         {pageNumbers.map(number =>
-            <span
-               className={currentPage === number ? classes.selectedPage : ''}
-               key={number}
-               onClick={() => setCurrentPage(number)}
-            >
-               {number}
-            </span>
-         )}
+         {currentDisplayedPage > 1 &&
+            <button onClick={() => setCurrentDisplayedPage(--currentDisplayedPage)}>&#8592;</button>}
+         {pageNumbers
+            .filter(number => number > leftNumber && number <= rightNumber)
+            .map(number =>
+               <span
+                  className={currentPage === number ? classes.selectedPage : ''}
+                  key={number}
+                  onClick={() => setCurrentPage(number)}
+               >
+                  {number}
+               </span>
+            )}
+         {currentDisplayedPage < pageCount / displayedPagePortion &&
+            <button onClick={() => setCurrentDisplayedPage(++currentDisplayedPage)}>&#8594;</button>}
       </div>
    )
 }

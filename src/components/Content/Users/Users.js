@@ -14,6 +14,7 @@ const Users = (props) => {
             pageSize={props.pageSize}
             currentPage={props.currentPage}
             setCurrentPage={props.setCurrentPage}
+            displayedPagePortion={props.displayedPagePortion}
          />
 
          {props.isFetching
