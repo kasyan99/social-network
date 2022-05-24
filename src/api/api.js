@@ -50,6 +50,27 @@ export const profileAPI = {
             })
          })
 
+   },
+   setAvatar(avatar) {
+      return authAPI.me()
+         .then((response) => response.data.me.id)
+         .then((userId) => {
+
+            instance.patch(`users/${userId}`, {
+               avatar: avatar
+               // avatar: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg'
+
+            })
+            // const formData = new FormData();
+            // formData.append("avatar", avatar);
+            // return instance.patch(`users/${userId}`, formData, {
+            //    headers: {
+            //       'Content-Type': 'multipart/form-data'
+            //    }
+            // })
+
+
+         })
    }
 }
 

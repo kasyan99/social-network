@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatusThunkCreator } from "../../../reduxF/profile-reducer";
+import { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatusThunkCreator, setAvatarThunkCreator } from "../../../reduxF/profile-reducer";
 import { Navigate, useParams } from 'react-router-dom';
 import { compose } from "redux";
 
@@ -25,6 +25,10 @@ const mapStateToProps = state => ({
 })
 
 const ProfileById = (props) => {
+
+
+   let owner
+
    let { userId } = useParams();
    if (!userId) {
       userId = props.authedUser
@@ -32,11 +36,16 @@ const ProfileById = (props) => {
          return <Navigate to='/login' />
       }
    }
-   return <ProfileContainer userId={userId} {...props} />
+
+   if (props.profile) {
+      owner = props.authedUser === props.profile.id
+   }
+
+   return <ProfileContainer userId={userId} owner={owner} {...props} />
 }
 
 const ProfileContainerConnected = compose(
-   connect(mapStateToProps, { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatus: updateUserStatusThunkCreator })
+   connect(mapStateToProps, { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatus: updateUserStatusThunkCreator, setAvatar: setAvatarThunkCreator })
 )(ProfileById)
 
 

@@ -5,6 +5,7 @@ const UPDATE_POST_TEXT = 'social-network/profile/UPDATE-POST-TEXT'
 const SET_USER_PROFILE = 'social-network/profile/SET-USER-PROFILE'
 const SET_USER_STATUS = 'social-network/profile/SET-USER-STATUS'
 const DELETE_POST = 'social-network/profile/DELETE-POST'
+const SET_AVATAR = 'social-network/profile/SET-AVATAR'
 
 const initialState = {
    profile: null,
@@ -45,6 +46,11 @@ function profileReducer(state = initialState, action) {
             ...state,
             posts: state.posts.filter(p => p.id !== action.id)
          }
+      case SET_AVATAR:
+         return {
+            ...state,
+            profile: { ...state.profile, avatar: action.avatar }
+         }
       default:
          return state
    }
@@ -54,6 +60,7 @@ export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const actionCreatorAddPost = (newPostText) => ({ type: ADD_POST, newPostText })
 export const actionCreatorUpdatePostText = (newPostText) => ({ type: UPDATE_POST_TEXT, newPostText })
 export const setUserStatus = (status) => ({ type: SET_USER_STATUS, status })
+export const setAvatar = (avatar) => ({ type: SET_AVATAR, avatar })
 //for test:
 export const deletePost = (id) => ({ type: DELETE_POST, id })
 
@@ -76,5 +83,12 @@ export const updateUserStatusThunkCreator = (status) => async (dispatch) => {
       dispatch(setUserStatus(status))
    }
 }
+
+export const setAvatarThunkCreator = (avatar) => async (dispatch) => {
+   await profileAPI.setAvatar(avatar)
+
+   dispatch(setAvatar(avatar))
+}
+
 
 export default profileReducer

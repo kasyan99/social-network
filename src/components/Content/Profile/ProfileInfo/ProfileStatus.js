@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import classes from './ProfileInfo.module.css'
 
 const ProfilStatus = props => {
    let [editMode, setEditMode] = useState(false)
@@ -18,7 +18,7 @@ const ProfilStatus = props => {
    const onStatusChange = (e) => setStatus(e.currentTarget.value)
 
    return (
-      <div>
+      <div className={classes.status}>
          {editMode &&
             <div>
                <input autoFocus={true} onBlur={deactivateEditMode} value={status} onChange={onStatusChange} />
