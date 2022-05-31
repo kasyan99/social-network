@@ -90,5 +90,12 @@ export const setAvatarThunkCreator = (avatar) => async (dispatch) => {
    dispatch(setAvatar(avatar))
 }
 
+export const updateProfileData = (profile) => async (dispatch, getState) => {
+   const userId = getState().auth.id
+   await profileAPI.updateProfileData(profile)
+   dispatch(getUserProfilThunkCreator(userId))
+   // dispatch(updateUserProfile(profile))
+}
+
 
 export default profileReducer

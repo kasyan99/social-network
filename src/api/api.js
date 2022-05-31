@@ -51,6 +51,16 @@ export const profileAPI = {
          })
 
    },
+   updateProfileData(profile) {
+      return authAPI.me()
+         .then((response) => response.data.me.id)
+         .then((userId) => {
+            return instance.patch(`users/${userId}`, {
+               fullName: profile.fullName,
+               age: profile.age
+            })
+         })
+   },
    setAvatar(avatar) {
       return authAPI.me()
          .then((response) => response.data.me.id)

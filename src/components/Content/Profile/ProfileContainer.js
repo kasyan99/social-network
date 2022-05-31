@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatusThunkCreator, setAvatarThunkCreator } from "../../../reduxF/profile-reducer";
+import { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatusThunkCreator, setAvatarThunkCreator, updateProfileData } from "../../../reduxF/profile-reducer";
 import { Navigate, useParams } from 'react-router-dom';
 import { compose } from "redux";
 
@@ -45,7 +45,7 @@ const ProfileById = (props) => {
 }
 
 const ProfileContainerConnected = compose(
-   connect(mapStateToProps, { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatus: updateUserStatusThunkCreator, setAvatar: setAvatarThunkCreator })
+   connect(mapStateToProps, { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatus: updateUserStatusThunkCreator, setAvatar: setAvatarThunkCreator, updateProfileData })
 )(ProfileById)
 
 

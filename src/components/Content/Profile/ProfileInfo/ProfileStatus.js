@@ -9,7 +9,7 @@ const ProfilStatus = props => {
       setStatus(props.status)
    }, [props.status])
 
-   const activateEditMode = () => setEditMode(true)
+   const activateEditMode = () => props.owner && setEditMode(true)
    const deactivateEditMode = () => {
       setEditMode(false)
       props.updateUserStatus(status)
