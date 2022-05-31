@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form"
 import { profileAPI, usersAPI } from "../api/api"
 
 const ADD_POST = 'social-network/profile/ADD-POST'
@@ -85,17 +86,24 @@ export const updateUserStatusThunkCreator = (status) => async (dispatch) => {
 }
 
 export const setAvatarThunkCreator = (avatar) => async (dispatch) => {
-   await profileAPI.setAvatar(avatar)
+   const response = await profileAPI.setAvatar(avatar)
 
-   dispatch(setAvatar(avatar))
+   if (response.statusText === 'OK') {
+      dispatch(setAvatar(avatar))
+   }
 }
 
 export const updateProfileData = (profile) => async (dispatch, getState) => {
-   const userId = getState().auth.id
-   await profileAPI.updateProfileData(profile)
-   dispatch(getUserProfilThunkCreator(userId))
-   // dispatch(updateUserProfile(profile))
-}
 
+   const userId = getState().auth.id
+   const response = await profileAPI.updateProfileData(profile)
+   console.log(response);
+   if (response.statusText === 'OK') {
+      dispatch(getUserProfilThunkCreator(userId))
+   } else {
+      dispatch(stopSubmit("edit-profile", { _error: response.data.messages[0] }))
+      // return Promise.reject(response.data.messages[0])
+   }
+}
 
 export default profileReducer

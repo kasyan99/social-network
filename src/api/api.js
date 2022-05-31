@@ -57,7 +57,9 @@ export const profileAPI = {
          .then((userId) => {
             return instance.patch(`users/${userId}`, {
                fullName: profile.fullName,
-               age: profile.age
+               age: profile.agem,
+               location: profile.location,
+               contacts: profile.contacts
             })
          })
    },

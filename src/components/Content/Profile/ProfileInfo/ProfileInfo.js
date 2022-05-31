@@ -16,9 +16,10 @@ const ProfileInfo = ({ profile, status, updateUserStatus, owner, setAvatar, upda
    }
 
    const onSubmit = (formData) => {
-      console.log(formData)
-      setEditMode(false)
-      updateProfileData(formData)
+      updateProfileData(formData).then(() => {
+         console.log(formData)
+         setEditMode(false)
+      })
    }
    if (!profile) {
       return <Preloader />
@@ -62,7 +63,7 @@ const ProfileInfo = ({ profile, status, updateUserStatus, owner, setAvatar, upda
                {owner &&
                   <button onClick={() => setEditMode(!editMode)}>edit</button>}
                {editMode
-                  ? <ProfileDataForm initialValues={profile} onSubmit={onSubmit} />
+                  ? <ProfileDataForm initialValues={profile} onSubmit={onSubmit} profile={profile} />
                   : <ProfileData profile={profile} />}
             </div>
          </div>
