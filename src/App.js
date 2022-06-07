@@ -6,7 +6,7 @@ import Footer from './components/Footer/Footer';
 import AsideContainer from './components/Aside/AsideContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import { connect } from 'react-redux';
-import { initializeThunkCreator } from './reduxF/app-reducer';
+import { initializeThunkCreator } from './reduxF/app-reducer.ts';
 import Preloader from './components/common/Preloader';
 
 
