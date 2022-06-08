@@ -1,3 +1,9 @@
+type MenuItem = {
+   id: number
+   linkName: string
+   linkPath: string
+}
+
 const initialState = {
    menuList: [
       { id: 1, linkName: 'Profile', linkPath: '/profile' },
@@ -5,10 +11,12 @@ const initialState = {
       { id: 3, linkName: 'Users', linkPath: '/users' },
       { id: 4, linkName: 'Music', linkPath: '/music' },
       { id: 5, linkName: 'Settings', linkPath: '/settings' },
-   ]
+   ] as Array<MenuItem>
 }
 
-function asideReducer(state = initialState, action) {
+type InitialStateType = typeof initialState
+
+function asideReducer(state = initialState, action: any): InitialStateType {
 
 
    return state

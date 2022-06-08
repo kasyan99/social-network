@@ -1,4 +1,5 @@
 import { usersAPI } from "../api/api"
+import { ProfileType } from "../types/types"
 
 const SET_USERS = 'social-network/users/SET-USERS'
 const FOLLOW = 'social-network/users/FOLLOW'
@@ -8,10 +9,18 @@ const SET_TOTAL_USERS_COUNT = 'social-network/users/SET-TOTAL-USERS-COUNT'
 const TOGGLE_FETCH = 'social-network/users/TOGGLE-FETCH'
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'social-network/users/TOGGLE-IS-FOLLOWING-PROGRESS'
 
-const initialState = {
-   usersList: [
+type InitialStateType = {
+   usersList: Array<ProfileType>
+   usersCount: number,
+   pageSize: number,
+   displayedPagePortion: number,
+   currentPage: number,
+   isFetching: boolean,
+   followingInProgress: Array<number>//Array of users id
+}
 
-   ],
+const initialState: InitialStateType = {
+   usersList: [],
    usersCount: 0,
    pageSize: 2,
    displayedPagePortion: 3,
@@ -20,7 +29,7 @@ const initialState = {
    followingInProgress: []
 }
 
-function usersReducer(state = initialState, action) {
+function usersReducer(state = initialState, action: any): InitialStateType {
 
    switch (action.type) {
       case FOLLOW:
@@ -65,16 +74,58 @@ function usersReducer(state = initialState, action) {
    }
 }
 
-export const actionCreatorSetUsers = (users) => ({ type: SET_USERS, users })
-export const actionCreatorFollowt = (userId) => ({ type: FOLLOW, id: userId })
-export const actionCreatorUnfollow = (userId) => ({ type: UNFOLLOW, id: userId })
-export const actionCreatorCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
-export const actionCreatorSetTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount })
-export const actionCreatorToggleIsFetching = (isFetching) => ({ type: TOGGLE_FETCH, isFetching })
-export const actionCreatorToggleIsFollowing = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
+type ActionCreatorSetUsersType = {
+   type: typeof SET_USERS
+   users: Array<ProfileType>
+}
+
+export const actionCreatorSetUsers = (users: Array<ProfileType>): ActionCreatorSetUsersType => ({ type: SET_USERS, users })
+
+type ActionCreatorFollowtType = {
+   type: typeof FOLLOW
+   id: number
+}
+
+export const actionCreatorFollowt = (userId: number): ActionCreatorFollowtType => ({ type: FOLLOW, id: userId })
+
+type ActionCreatorUnfollowType = {
+   type: typeof UNFOLLOW
+   id: number
+}
+
+export const actionCreatorUnfollow = (userId: number): ActionCreatorUnfollowType => ({ type: UNFOLLOW, id: userId })
+
+type ActionCreatorCurrentPageType = {
+   type: typeof SET_CURRENT_PAGE
+   currentPage: number
+}
+
+export const actionCreatorCurrentPage = (currentPage: number): ActionCreatorCurrentPageType => ({ type: SET_CURRENT_PAGE, currentPage })
+
+type ActionCreatorSetTotalUsersCountType = {
+   type: typeof SET_TOTAL_USERS_COUNT
+   totalUsersCount: number
+}
+
+export const actionCreatorSetTotalUsersCount = (totalUsersCount: number): ActionCreatorSetTotalUsersCountType => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount })
+
+type ActionCreatorToggleIsFetchingType = {
+   type: typeof TOGGLE_FETCH
+   isFetching: boolean
+}
+
+export const actionCreatorToggleIsFetching = (isFetching: boolean): ActionCreatorToggleIsFetchingType => ({ type: TOGGLE_FETCH, isFetching })
+
+type ActionCreatorToggleIsFollowingType = {
+   type: typeof TOGGLE_IS_FOLLOWING_PROGRESS
+   isFetching: boolean
+   userId: number
+}
+
+export const actionCreatorToggleIsFollowing = (isFetching: boolean, userId: number): ActionCreatorToggleIsFollowingType => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
 
 
-export const getUsersThunkCreator = (currentPage, pageSize) => async (dispatch) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: any) => {
    dispatch(actionCreatorCurrentPage(currentPage))
    dispatch(actionCreatorToggleIsFetching(true))
 
@@ -86,7 +137,7 @@ export const getUsersThunkCreator = (currentPage, pageSize) => async (dispatch) 
 
 }
 
-const unfollowThunkCreator = (id) => async (dispatch) => {
+const unfollowThunkCreator = (id: number) => async (dispatch: any) => {
    const response = await usersAPI.unfollow(id)
 
    if (response.statusText === 'OK') {
@@ -95,7 +146,7 @@ const unfollowThunkCreator = (id) => async (dispatch) => {
    dispatch(actionCreatorToggleIsFollowing(false, id))
 }
 
-const followTnunkCreator = (id) => async (dispatch) => {
+const followTnunkCreator = (id: number) => async (dispatch: any) => {
    const response = await usersAPI.follow(id)
 
    if (response.statusText === 'OK') {
@@ -104,7 +155,7 @@ const followTnunkCreator = (id) => async (dispatch) => {
    dispatch(actionCreatorToggleIsFollowing(false, id))
 }
 
-export const followToggleThunkCreator = (user) => (dispatch) => {
+export const followToggleThunkCreator = (user: ProfileType) => (dispatch: any) => {
    dispatch(actionCreatorToggleIsFollowing(true, user.id))
    user.followed
       ? dispatch(unfollowThunkCreator(user.id))

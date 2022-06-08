@@ -1,6 +1,22 @@
 const ADD_MESSAGE = 'social-network/messages/ADD-MESSAGE'
 
-const initialState = {
+type ContactType = {
+   id: number
+   name: string
+}
+
+type MessageType = {
+   id: number
+   text: string
+   my: boolean
+}
+
+type InitialStateType = {
+   contactsList: Array<ContactType>
+   messagesList: Array<MessageType>
+}
+
+const initialState: InitialStateType = {
    contactsList: [
       { id: 1, name: 'Nikolay' },
       { id: 2, name: 'Vlad' },
@@ -18,7 +34,7 @@ const initialState = {
    ]
 }
 
-function messagesReducer(state = initialState, action) {
+function messagesReducer(state = initialState, action: any): InitialStateType {
    switch (action.type) {
       case ADD_MESSAGE:
          const message = {
@@ -35,6 +51,11 @@ function messagesReducer(state = initialState, action) {
    }
 }
 
-export const actionCreatorAddMessage = (newMessageText) => ({ type: ADD_MESSAGE, newMessageText })
+type ActionCreatorAddMessageType = {
+   type: typeof ADD_MESSAGE
+   newMessageText: string
+}
+
+export const actionCreatorAddMessage = (newMessageText: string): ActionCreatorAddMessageType => ({ type: ADD_MESSAGE, newMessageText })
 
 export default messagesReducer

@@ -2,11 +2,15 @@ import { getAuthUserDataThunkCreator } from "./auth-reducer"
 
 const INITIALIZED_SUCCESS = 'social-network/app/INITIALIZED-SUCCESS'
 
-const initialState = {
+type InitialStateType = {
+   initialized: boolean
+}
+
+const initialState: InitialStateType = {
    initialized: false
 }
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action: any): InitialStateType => {
    switch (action.type) {
       case INITIALIZED_SUCCESS:
          return {
@@ -18,9 +22,13 @@ const appReducer = (state = initialState, action) => {
    }
 }
 
-export const actionInitializedSuccess = () => ({ type: INITIALIZED_SUCCESS })
+type ActionInitializedSuccessType = {
+   type: typeof INITIALIZED_SUCCESS
+}
 
-export const initializeThunkCreator = () => dispatch => {
+export const actionInitializedSuccess = (): ActionInitializedSuccessType => ({ type: INITIALIZED_SUCCESS })
+
+export const initializeThunkCreator = () => (dispatch: any) => {
    dispatch(getAuthUserDataThunkCreator())
       .then(() => {
          dispatch(actionInitializedSuccess())

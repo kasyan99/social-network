@@ -3,14 +3,21 @@ import { authAPI } from "../api/api"
 
 const SET_USER_DATA = 'social-network/auth/SET-USER-DATA'
 
-const initialState = {
+type InitialState = {
+   id: number | null,
+   login: string | null,
+   email: string | null,
+   isAuth: boolean
+}
+
+const initialState: InitialState = {
    id: null,
    login: null,
    email: null,
    isAuth: false
 }
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any): InitialState => {
    switch (action.type) {
       case SET_USER_DATA:
          return {
@@ -22,9 +29,16 @@ const authReducer = (state = initialState, action) => {
    }
 }
 
-export const actionCreatorSetAuthUserData = (id, login, email, isAuth) => ({ type: SET_USER_DATA, data: { id, login, email, isAuth } })
+type ActionCreatorSetAuthUserDataType = {
+   type: typeof SET_USER_DATA
+   data: InitialState
+}
 
-export const getAuthUserDataThunkCreator = () => async (dispatch) => {
+export const actionCreatorSetAuthUserData = (id: number | null, login: string | null, email: string | null, isAuth: boolean): ActionCreatorSetAuthUserDataType => ({
+   type: SET_USER_DATA, data: { id, login, email, isAuth }
+})
+
+export const getAuthUserDataThunkCreator = () => async (dispatch: any) => {
    const response = await authAPI.me()
 
    if (response.data.isAuth) {
@@ -33,7 +47,7 @@ export const getAuthUserDataThunkCreator = () => async (dispatch) => {
    }
 }
 
-export const loginThunkCreator = (email, password, rememberMe) => async dispatch => {
+export const loginThunkCreator = (email: string, password: string, rememberMe: boolean) => async dispatch => {
    const checkLoginResponse = await authAPI.checkLogin(email, password, rememberMe)
 
    if (checkLoginResponse.data[0]) {
@@ -52,29 +66,7 @@ export const loginThunkCreator = (email, password, rememberMe) => async dispatch
    }
 }
 
-// export const loginThunkCreator = (email, password, rememberMe) => async dispatch => {
-//    authAPI.checkLogin(email, password, rememberMe)
-//       .then(response => {
-//          if (!response.data[0]) {
-//             console.log('ckeck login', response.data)
-//             dispatch(stopSubmit('loginForm', { _error: 'Email or password is wrong' }))
-//          }
-//          return response.data[0]
-//       })
-//       .then(async userData => {
-//          const { id, login, email } = userData
-
-//          const loginResponse = await authAPI.login(id, login, email)
-
-//          if (loginResponse.status === 200) {
-//             dispatch(actionCreatorSetAuthUserData(id, login, email, true))
-//          }
-
-//       })
-
-// }
-
-export const logoutThunkCreator = () => async dispatch => {
+export const logoutThunkCreator = () => async (dispatch: any) => {
    const response = await authAPI.logout()
 
    if (response.status === 200) {
