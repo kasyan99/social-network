@@ -1,9 +1,18 @@
-import React, { useState } from "react"
+import React from "react"
+import { useState } from "react"
 import classes from './Users.module.css'
 
-const Paginator = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion }) => {
-   const pageCount = Math.ceil(usersCount / pageSize)
-   const pageNumbers = []
+type PropsType = {
+   usersCount: number
+   pageSize: number
+   currentPage: number
+   setCurrentPage: (number: number) => void
+   displayedPagePortion: number
+}
+
+const Paginator: React.FC<PropsType> = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion }) => {
+   const pageCount: number = Math.ceil(usersCount / pageSize)
+   const pageNumbers: Array<number> = []
 
    let [currentDisplayedPage, setCurrentDisplayedPage] = useState(1)
 

@@ -21,3 +21,4 @@ export type Post = {
    text: string
    likes: number
 }
+

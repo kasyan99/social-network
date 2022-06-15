@@ -1,4 +1,9 @@
 {
+   "compilerOptions": {
+      "jsx": "react",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true
+   },
    "resolve": {
       "extensions": [
          ".js",
