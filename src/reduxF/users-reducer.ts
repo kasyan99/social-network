@@ -1,5 +1,8 @@
+// import { Dispatch } from "redux"
+import { ThunkAction } from "redux-thunk"
 import { usersAPI } from "../api/api"
 import { ProfileType } from "../types/types"
+import { AppStateType } from "./redux-store"
 
 const SET_USERS = 'social-network/users/SET-USERS'
 const FOLLOW = 'social-network/users/FOLLOW'
@@ -29,7 +32,7 @@ const initialState: InitialStateType = {
    followingInProgress: []
 }
 
-function usersReducer(state = initialState, action: any): InitialStateType {
+function usersReducer(state = initialState, action: ActionsUsersType): InitialStateType {
 
    switch (action.type) {
       case FOLLOW:
@@ -73,6 +76,9 @@ function usersReducer(state = initialState, action: any): InitialStateType {
          return state
    }
 }
+
+type ActionsUsersType = ActionCreatorSetUsersType | ActionCreatorFollowtType | ActionCreatorUnfollowType | ActionCreatorCurrentPageType
+   | ActionCreatorSetTotalUsersCountType | ActionCreatorToggleIsFetchingType | ActionCreatorToggleIsFollowingType
 
 type ActionCreatorSetUsersType = {
    type: typeof SET_USERS
@@ -125,41 +131,49 @@ type ActionCreatorToggleIsFollowingType = {
 export const actionCreatorToggleIsFollowing = (isFetching: boolean, userId: number): ActionCreatorToggleIsFollowingType => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId })
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => async (dispatch: any) => {
-   dispatch(actionCreatorCurrentPage(currentPage))
-   dispatch(actionCreatorToggleIsFetching(true))
+// type GetStateType = () => AppStateType
+// type DispatchType = Dispatch<ActionsUsersType>
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsUsersType>
 
-   const response = await usersAPI.getUsers(currentPage, pageSize)
+export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkType =>
+   async (dispatch, getState) => {
+      dispatch(actionCreatorCurrentPage(currentPage))
+      dispatch(actionCreatorToggleIsFetching(true))
 
-   dispatch(actionCreatorToggleIsFetching(false))
-   dispatch(actionCreatorSetUsers(response.users))
-   dispatch(actionCreatorSetTotalUsersCount(response.totalCount))
+      const response = await usersAPI.getUsers(currentPage, pageSize)
 
-}
+      dispatch(actionCreatorToggleIsFetching(false))
+      dispatch(actionCreatorSetUsers(response.users))
+      dispatch(actionCreatorSetTotalUsersCount(response.totalCount))
 
-const unfollowThunkCreator = (id: number) => async (dispatch: any) => {
-   const response = await usersAPI.unfollow(id)
-
-   if (response.statusText === 'OK') {
-      dispatch(actionCreatorUnfollow(id))
    }
-   dispatch(actionCreatorToggleIsFollowing(false, id))
-}
 
-const followTnunkCreator = (id: number) => async (dispatch: any) => {
-   const response = await usersAPI.follow(id)
+const unfollowThunkCreator = (id: number): ThunkType =>
+   async (dispatch) => {
+      const response = await usersAPI.unfollow(id)
 
-   if (response.statusText === 'OK') {
-      dispatch(actionCreatorFollowt(id))
+      if (response.statusText === 'OK') {
+         dispatch(actionCreatorUnfollow(id))
+      }
+      dispatch(actionCreatorToggleIsFollowing(false, id))
    }
-   dispatch(actionCreatorToggleIsFollowing(false, id))
-}
 
-export const followToggleThunkCreator = (user: ProfileType) => (dispatch: any) => {
-   dispatch(actionCreatorToggleIsFollowing(true, user.id))
-   user.followed
-      ? dispatch(unfollowThunkCreator(user.id))
-      : dispatch(followTnunkCreator(user.id))
-}
+const followTnunkCreator = (id: number): ThunkType =>
+   async (dispatch) => {
+      const response = await usersAPI.follow(id)
+
+      if (response.statusText === 'OK') {
+         dispatch(actionCreatorFollowt(id))
+      }
+      dispatch(actionCreatorToggleIsFollowing(false, id))
+   }
+
+export const followToggleThunkCreator = (user: ProfileType): ThunkType =>
+   (dispatch) => {
+      dispatch(actionCreatorToggleIsFollowing(true, user.id))
+      user.followed
+         ? dispatch(unfollowThunkCreator(user.id))
+         : dispatch(followTnunkCreator(user.id))
+   }
 
 export default usersReducer
