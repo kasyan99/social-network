@@ -1,8 +1,8 @@
 import React from "react"
 import styles from "./FormsControls.module.css"
 
-export const Element = Element => {
-   return ({ input, meta: { touched, error }, ...props }) => {
+export const Element = (Element: string) => {
+   return ({ input, meta: { touched, error }, ...props }): React.ReactElement => {
       const hasError = touched && error
       return (
          <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>

@@ -1,4 +1,5 @@
 import axios from "axios"
+import { ProfileType } from "../types/types"
 
 
 const instance = axios.create({
@@ -17,17 +18,17 @@ export const usersAPI = {
          })
 
    },
-   unfollow(id) {
+   unfollow(id: number) {
       return instance.patch(`users/${id}`, {
          followed: false
       })
    },
-   follow(id) {
+   follow(id: number) {
       return instance.patch(`users/${id}`, {
          followed: true
       })
    },
-   getProfileInfo(userId) {
+   getProfileInfo(userId: number) {
       // return instance.get(`users?id=${userId}`).then(response => response.data[0])
       console.warn(`You should use "profileAPI"`)
       return profileAPI.getProfileInfo(userId)
@@ -35,13 +36,13 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-   getProfileInfo(userId) {
+   getProfileInfo(userId: number) {
       return instance.get(`users?id=${userId}`).then(response => response.data[0])
    },
-   getStatus(userId) {
+   getStatus(userId: number) {
       return instance.get(`users?id=${userId}`).then(response => response.data[0].status)
    },
-   updateStatus(status) {
+   updateStatus(status: string) {
       return authAPI.me()
          .then((response) => response.data.me.id)
          .then((userId) => {
@@ -51,7 +52,7 @@ export const profileAPI = {
          })
 
    },
-   updateProfileData(profile) {
+   updateProfileData(profile: ProfileType) {
       return authAPI.me()
          .then((response) => response.data.me.id)
          .then((userId) => {
@@ -63,12 +64,12 @@ export const profileAPI = {
             })
          })
    },
-   setAvatar(avatar) {
+   setAvatar(avatar: any) {
       return authAPI.me()
          .then((response) => response.data.me.id)
          .then((userId) => {
 
-            instance.patch(`users/${userId}`, {
+            return instance.patch(`users/${userId}`, {
                avatar: avatar
                // avatar: 'https://upload.wikimedia.org/wikipedia/commons/0/0e/Felis_silvestris_silvestris.jpg'
 
@@ -86,15 +87,20 @@ export const profileAPI = {
    }
 }
 
+type MeResponseType = {
+   isAuth: boolean
+   me: { id: number, login: string, email: string }
+}
+
 export const authAPI = {
    me() {
-      return instance.get(`authMe`)
+      return instance.get<MeResponseType>(`authMe`)
    },
-   checkLogin(email, password, rememberMe = false) {
+   checkLogin(email: string, password: string, rememberMe = false) {
       return instance.get(`auth?email=${email}&password=${password}`)
    },
-   login(id, login, email) {
-      return instance.patch('authMe', {
+   login(id: number, login: string, email: string) {
+      return instance.patch<MeResponseType>('authMe', {
          isAuth: true,
          me: { id, login, email }
       })

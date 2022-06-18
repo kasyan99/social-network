@@ -1,5 +1,5 @@
 import { stopSubmit } from "redux-form"
-import { profileAPI, usersAPI } from "../api/api"
+import { profileAPI } from "../api/api"
 import { Post, ProfileType } from "../types/types"
 
 const ADD_POST = 'social-network/profile/ADD-POST'
@@ -107,7 +107,7 @@ type DeletePostType = {
 export const deletePost = (id: number): DeletePostType => ({ type: DELETE_POST, id })
 
 export const getUserProfilThunkCreator = (userId: number) => async (dispatch: any) => {
-   const profileInfo = await usersAPI.getProfileInfo(userId)
+   const profileInfo = await profileAPI.getProfileInfo(userId)
 
    dispatch(setUserProfile(profileInfo))
 }

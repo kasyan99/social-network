@@ -144,7 +144,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number): Thu
 
       dispatch(actionCreatorToggleIsFetching(false))
       dispatch(actionCreatorSetUsers(response.users))
-      dispatch(actionCreatorSetTotalUsersCount(response.totalCount))
+      dispatch(actionCreatorSetTotalUsersCount(Number(response.totalCount)))
 
    }
 
