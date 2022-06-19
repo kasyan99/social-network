@@ -1,5 +1,5 @@
 import { stopSubmit } from "redux-form"
-import { profileAPI } from "../api/api"
+import { profileAPI } from "../api/profile-api"
 import { Post, ProfileType } from "../types/types"
 
 const ADD_POST = 'social-network/profile/ADD-POST'
@@ -138,12 +138,15 @@ export const updateProfileData = (profile: ProfileType | null) => async (dispatc
 
    const userId = getState().auth.id
    const response = await profileAPI.updateProfileData(profile)
-   console.log(response);
+
    if (response.statusText === 'OK') {
       dispatch(getUserProfilThunkCreator(userId))
-   } else {
-      dispatch(stopSubmit("edit-profile", { _error: response.data.messages[0] }))
+   }
+   else {
+      dispatch(stopSubmit("edit-profile", { _error: "response Error" }))
+      // dispatch(stopSubmit("edit-profile", { _error: response.data.messages[0] }))
       // return Promise.reject(response.data.messages[0])
+
    }
 }
 

@@ -1,6 +1,6 @@
 // import { Dispatch } from "redux"
 import { ThunkAction } from "redux-thunk"
-import { usersAPI } from "../api/api"
+import { usersAPI } from "../api/users-api"
 import { ProfileType } from "../types/types"
 import { InferActionsTypes, AppStateType } from "./redux-store"
 
