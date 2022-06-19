@@ -3,19 +3,21 @@ import { authAPI } from "../api/api"
 
 const SET_USER_DATA = 'social-network/auth/SET-USER-DATA'
 
-type InitialState = {
-   id: number | null,
-   login: string | null,
-   email: string | null,
-   isAuth: boolean
-}
+// type InitialState = {
+//    id: number | null,
+//    login: string | null,
+//    email: string | null,
+//    isAuth: boolean
+// }
 
-const initialState: InitialState = {
-   id: null,
-   login: null,
-   email: null,
+const initialState = {
+   id: null as number,
+   login: null as string,
+   email: null as string,
    isAuth: false
 }
+
+type InitialState = typeof initialState
 
 const authReducer = (state = initialState, action: any): InitialState => {
    switch (action.type) {

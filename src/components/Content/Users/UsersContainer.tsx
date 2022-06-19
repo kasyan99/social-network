@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
-import { actionCreatorCurrentPage, actionCreatorFollowt, actionCreatorUnfollow, actionCreatorToggleIsFollowing, getUsersThunkCreator, followToggleThunkCreator } from "../../../reduxF/users-reducer";
+// import { usersActions.CurrentPage, usersActions.Followt, usersActions.Unfollow, usersActions.ToggleIsFollowing, getUsersThunkCreator, followToggleThunkCreator } from "../../../reduxF/users-reducer";
+import { usersActions, getUsersThunkCreator, followToggleThunkCreator } from "../../../reduxF/users-reducer";
 import Users from "./Users";
 import React from "react"
 import { getCurrentPage, getDisplayedPagePortion, getFollowingInProgress, getIsFetching, getPageSize, getUsersCount, getUsersList } from "../../../reduxF/users-selectors";
@@ -84,10 +85,10 @@ const mapStateToProps = (state: AppStateType): UsersMapStateToPropsType => {
 }
 
 const mapDispatchToProps: UsersMapDispatchToPropsType = {
-   follow: actionCreatorFollowt,
-   unfollow: actionCreatorUnfollow,
-   setCurrentPage: actionCreatorCurrentPage,
-   toggleIsFollowing: actionCreatorToggleIsFollowing,
+   follow: usersActions.Followt,
+   unfollow: usersActions.Unfollow,
+   setCurrentPage: usersActions.CurrentPage,
+   toggleIsFollowing: usersActions.ToggleIsFollowing,
    getUsers: getUsersThunkCreator,
    followToggle: followToggleThunkCreator
 }
