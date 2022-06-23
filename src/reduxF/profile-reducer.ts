@@ -1,6 +1,7 @@
-import { stopSubmit } from "redux-form"
+import { FormAction, stopSubmit } from "redux-form"
 import { profileAPI } from "../api/profile-api"
 import { Post, ProfileType } from "../types/types"
+import { BaseThunkType, InferActionsTypes } from "./redux-store"
 
 const ADD_POST = 'social-network/profile/ADD-POST'
 const UPDATE_POST_TEXT = 'social-network/profile/UPDATE-POST-TEXT'
@@ -10,7 +11,7 @@ const DELETE_POST = 'social-network/profile/DELETE-POST'
 const SET_AVATAR = 'social-network/profile/SET-AVATAR'
 
 
-type InitialStateType = {
+export type InitialStateType = {
    profile: ProfileType | null
    posts: Array<Post>
    status: string
@@ -27,7 +28,11 @@ const initialState: InitialStateType = {
    status: ''
 }
 
-function profileReducer(state = initialState, action: any): InitialStateType {
+type ActionsType = InferActionsTypes<typeof profileActions>
+type ThunkType = BaseThunkType<ActionsType | FormAction>
+
+
+function profileReducer(state = initialState, action: ActionsType): InitialStateType {
 
    switch (action.type) {
       case ADD_POST:
@@ -65,76 +70,49 @@ function profileReducer(state = initialState, action: any): InitialStateType {
    }
 }
 
-type SetUserProfileType = {
-   type: typeof SET_USER_PROFILE
-   profile: ProfileType | null
+export const profileActions = {
+   setUserProfile: (profile: ProfileType | null) => ({ type: SET_USER_PROFILE, profile } as const),
+
+   addPost: (newPostText: string) => ({ type: ADD_POST, newPostText } as const),
+
+   updatePostText: (newPostText: string) => ({ type: UPDATE_POST_TEXT, newPostText } as const),
+
+   setUserStatus: (status: string) => ({ type: SET_USER_STATUS, status } as const),
+
+   setAvatar: (avatar: any) => ({ type: SET_AVATAR, avatar } as const),
+   //for test
+   deletePost: (id: number) => ({ type: DELETE_POST, id } as const)
 }
 
-export const setUserProfile = (profile: ProfileType | null): SetUserProfileType => ({ type: SET_USER_PROFILE, profile })
-
-type ActionCreatorAddPostType = {
-   type: typeof ADD_POST
-   newPostText: string
-}
-
-export const actionCreatorAddPost = (newPostText: string): ActionCreatorAddPostType => ({ type: ADD_POST, newPostText })
-
-type ActionCreatorUpdatePostTextType = {
-   type: typeof UPDATE_POST_TEXT
-   newPostText: string
-}
-
-export const actionCreatorUpdatePostText = (newPostText: string): ActionCreatorUpdatePostTextType => ({ type: UPDATE_POST_TEXT, newPostText })
-
-type SetUserStatusType = {
-   type: typeof SET_USER_STATUS
-   status: string
-}
-
-export const setUserStatus = (status: string): SetUserStatusType => ({ type: SET_USER_STATUS, status })
-
-type SetAvatarType = {
-   type: typeof SET_AVATAR
-   avatar: any
-}
-
-export const setAvatar = (avatar: any): SetAvatarType => ({ type: SET_AVATAR, avatar })
-//for test:
-type DeletePostType = {
-   type: typeof DELETE_POST
-   id: number
-}
-export const deletePost = (id: number): DeletePostType => ({ type: DELETE_POST, id })
-
-export const getUserProfilThunkCreator = (userId: number) => async (dispatch: any) => {
+export const getUserProfilThunkCreator = (userId: number): ThunkType => async (dispatch) => {
    const profileInfo = await profileAPI.getProfileInfo(userId)
 
-   dispatch(setUserProfile(profileInfo))
+   dispatch(profileActions.setUserProfile(profileInfo))
 }
 
-export const getUserStatusThunkCreator = (userId: number) => async (dispatch: any) => {
+export const getUserStatusThunkCreator = (userId: number): ThunkType => async (dispatch) => {
    const status = await profileAPI.getStatus(userId)
 
-   dispatch(setUserStatus(status))
+   dispatch(profileActions.setUserStatus(status))
 }
 
-export const updateUserStatusThunkCreator = (status: string) => async (dispatch: any) => {
+export const updateUserStatusThunkCreator = (status: string): ThunkType => async (dispatch) => {
    const response = await profileAPI.updateStatus(status)
 
    if (response.statusText === 'OK') {
-      dispatch(setUserStatus(status))
+      dispatch(profileActions.setUserStatus(status))
    }
 }
 
-export const setAvatarThunkCreator = (avatar: any) => async (dispatch: any) => {
+export const setAvatarThunkCreator = (avatar: any): ThunkType => async (dispatch) => {
    const response = await profileAPI.setAvatar(avatar)
 
    if (response.statusText === 'OK') {
-      dispatch(setAvatar(avatar))
+      dispatch(profileActions.setAvatar(avatar))
    }
 }
 
-export const updateProfileData = (profile: ProfileType | null) => async (dispatch: any, getState: any) => {
+export const updateProfileData = (profile: ProfileType | null): ThunkType => async (dispatch, getState) => {
 
    const userId = getState().auth.id
    const response = await profileAPI.updateProfileData(profile)

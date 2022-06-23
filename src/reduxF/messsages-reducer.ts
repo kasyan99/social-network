@@ -1,3 +1,5 @@
+import { InferActionsTypes } from "./redux-store"
+
 const ADD_MESSAGE = 'social-network/messages/ADD-MESSAGE'
 
 type ContactType = {
@@ -34,7 +36,9 @@ const initialState: InitialStateType = {
    ]
 }
 
-function messagesReducer(state = initialState, action: any): InitialStateType {
+type ActionsType = InferActionsTypes<typeof messagesActions>
+
+function messagesReducer(state = initialState, action: ActionsType): InitialStateType {
    switch (action.type) {
       case ADD_MESSAGE:
          const message = {
@@ -51,11 +55,10 @@ function messagesReducer(state = initialState, action: any): InitialStateType {
    }
 }
 
-type ActionCreatorAddMessageType = {
-   type: typeof ADD_MESSAGE
-   newMessageText: string
-}
 
-export const actionCreatorAddMessage = (newMessageText: string): ActionCreatorAddMessageType => ({ type: ADD_MESSAGE, newMessageText })
+
+export const messagesActions = {
+   addMessage: (newMessageText: string) => ({ type: ADD_MESSAGE, newMessageText })
+}
 
 export default messagesReducer

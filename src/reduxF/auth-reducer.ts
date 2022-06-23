@@ -1,14 +1,8 @@
-import { stopSubmit } from "redux-form"
+import { FormAction, stopSubmit } from "redux-form"
 import { authAPI } from "../api/auth-api"
+import { BaseThunkType, InferActionsTypes } from "./redux-store"
 
 const SET_USER_DATA = 'social-network/auth/SET-USER-DATA'
-
-// type InitialState = {
-//    id: number | null,
-//    login: string | null,
-//    email: string | null,
-//    isAuth: boolean
-// }
 
 const initialState = {
    id: null as number,
@@ -18,8 +12,10 @@ const initialState = {
 }
 
 type InitialState = typeof initialState
+type ActionsType = InferActionsTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionsType | FormAction>
 
-const authReducer = (state = initialState, action: any): InitialState => {
+const authReducer = (state = initialState, action: ActionsType): InitialState => {
    switch (action.type) {
       case SET_USER_DATA:
          return {
@@ -31,25 +27,22 @@ const authReducer = (state = initialState, action: any): InitialState => {
    }
 }
 
-type ActionCreatorSetAuthUserDataType = {
-   type: typeof SET_USER_DATA
-   data: InitialState
+export const actions = {
+   setAuthUserData: (id: number | null, login: string | null, email: string | null, isAuth: boolean) => ({
+      type: SET_USER_DATA, data: { id, login, email, isAuth }
+   })
 }
 
-export const actionCreatorSetAuthUserData = (id: number | null, login: string | null, email: string | null, isAuth: boolean): ActionCreatorSetAuthUserDataType => ({
-   type: SET_USER_DATA, data: { id, login, email, isAuth }
-})
-
-export const getAuthUserDataThunkCreator = () => async (dispatch: any) => {
+export const getAuthUserDataThunkCreator = (): ThunkType => async (dispatch) => {
    const response = await authAPI.me()
 
    if (response.data.isAuth) {
       const { id, login, email } = response.data.me
-      dispatch(actionCreatorSetAuthUserData(id, login, email, true))
+      dispatch(actions.setAuthUserData(id, login, email, true))
    }
 }
 
-export const loginThunkCreator = (email: string, password: string, rememberMe: boolean) => async dispatch => {
+export const loginThunkCreator = (email: string, password: string, rememberMe: boolean): ThunkType => async dispatch => {
    const checkLoginResponse = await authAPI.checkLogin(email, password, rememberMe)
 
    if (checkLoginResponse.data[0]) {
@@ -59,7 +52,7 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
       const loginResponse = await authAPI.login(id, login, email)
 
       if (loginResponse.status === 200) {
-         dispatch(actionCreatorSetAuthUserData(id, login, email, true))
+         dispatch(actions.setAuthUserData(id, login, email, true))
       }
 
    } else {
@@ -72,7 +65,7 @@ export const logoutThunkCreator = () => async (dispatch: any) => {
    const response = await authAPI.logout()
 
    if (response.status === 200) {
-      dispatch(actionCreatorSetAuthUserData(null, null, null, false))
+      dispatch(actions.setAuthUserData(null, null, null, false))
    }
 
 }
