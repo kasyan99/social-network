@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field, SubmitHandler } from 'redux-form';
 import { reduxForm } from "redux-form";
 import { maxLengthCreator, requiredField } from '../../../../../utils/validators/validators';
 import { Element } from '../../../../common/FormsControls/FormsControls';
@@ -9,7 +9,11 @@ const maxLength100 = maxLengthCreator(100)
 
 const Textarea = Element('textarea')
 
-const DialogForm = (props) => {
+type Props = {
+   handleSubmit: SubmitHandler
+}
+
+const DialogForm: React.FC<Props> = (props) => {
 
    return (
       <form className={styles.dialog__form} onSubmit={props.handleSubmit}>

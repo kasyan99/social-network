@@ -1,8 +1,13 @@
 import React from 'react';
+import { ContactType } from '../../../../reduxF/messsages-reducer';
 import Contact from './Contact/Contact';
 import styles from './Contacts.module.css';
 
-function Contacts(props) {
+type Props = {
+   contactsList: Array<ContactType>
+}
+
+const Contacts: React.FC<Props> = (props) => {
    return (
       <div className={styles.contacts}>
          <ul className='contacts__list'>

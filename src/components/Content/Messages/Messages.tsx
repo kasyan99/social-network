@@ -2,13 +2,20 @@ import React from 'react';
 import Contacts from './Contacts/Contacts';
 import styles from './Messages.module.css';
 import Dialog from './Dialog/Dialog'
-import { Navigate } from 'react-router-dom';
+import { ContactType, MessageType } from '../../../reduxF/messsages-reducer';
 
-function Messages(props) {
+type Props = {
+   isAuth: true
+   contactsList: Array<ContactType>
+   messagesList: Array<MessageType>
+   addMessage: (text: string) => void
+}
 
-   if (!props.isAuth) {
-      return <Navigate to='/login' />
-   }
+const Messages: React.FC<Props> = (props) => {
+
+   // if (!props.isAuth) {
+   //    return <Navigate to='/login' />
+   // }
    return (
       <div className={styles.messages}>
          <Contacts contactsList={props.contactsList} />

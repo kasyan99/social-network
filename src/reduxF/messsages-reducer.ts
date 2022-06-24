@@ -2,12 +2,12 @@ import { InferActionsTypes } from "./redux-store"
 
 const ADD_MESSAGE = 'social-network/messages/ADD-MESSAGE'
 
-type ContactType = {
+export type ContactType = {
    id: number
    name: string
 }
 
-type MessageType = {
+export type MessageType = {
    id: number
    text: string
    my: boolean

@@ -22,9 +22,9 @@ const mapDispatchToProps = (dispatch) => {
    }
 }
 
-const MessagesContainer = compose(
+const MessagesContainer = compose<any>(
    connect(mapStateToProps, mapDispatchToProps),
-   withAuthRedirect
+   withAuthRedirect,
 )(Messages)
 
 export default MessagesContainer

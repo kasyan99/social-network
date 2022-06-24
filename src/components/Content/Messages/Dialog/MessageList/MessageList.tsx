@@ -1,7 +1,11 @@
 import React from 'react';
+import { MessageType } from '../../../../../reduxF/messsages-reducer';
 import styles from './MessageList.module.css';
 
-function MessageList(props) {
+type Props = {
+   messagesList: Array<MessageType>
+}
+const MessageList: React.FC<Props> = (props) => {
 
    const messagesList = () => {
       return props.messagesList.map(

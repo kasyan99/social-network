@@ -1,10 +1,20 @@
 import React from 'react';
+import { MessageType } from '../../../../reduxF/messsages-reducer';
 import styles from './Dialog.module.css';
 import DialogForm from './DialogForm/DialogForm'
 import MessageList from './MessageList/MessageList';
 
-function Dialog(props) {
-   const onSubmit = (formData) => {
+type Props = {
+   addMessage: (text: string) => void
+   messagesList: Array<MessageType>
+}
+
+type LoginFormValuesType = {
+   newMessageText: string
+}
+
+const Dialog: React.FC<Props> = (props) => {
+   const onSubmit = (formData: LoginFormValuesType) => {
       props.addMessage(formData.newMessageText)
       formData.newMessageText = ''
    }
