@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Posts.module.css';
-import Post from './Post/Post';
+import Post, { PostType } from './Post/Post';
 import { Field } from "redux-form";
 import { reduxForm } from "redux-form";
 import { maxLengthCreator, requiredField } from '../../../../utils/validators/validators';
@@ -23,18 +23,25 @@ const ProfileForm = (props) => {
 const ProfileFormRedux = reduxForm({
    form: 'profileForm'
 })(ProfileForm)
-const Posts = (props) => {
+
+type Props = {
+   addPost: (text: string) => void
+   posts: Array<PostType>
+}
+
+const Posts: React.FC<Props> = (props) => {
+
    const posts = () => {
       return (props.posts.map(
          post => <Post post={post} key={post.id} />
       ))
    }
 
-   const addPost = (newPostText) => {
+   const addPost = (newPostText: string) => {
       props.addPost(newPostText)
    }
 
-   const onSubmit = (formData) => {
+   const onSubmit = (formData: { newPostText: string }) => {
       addPost(formData.newPostText)
       formData.newPostText = ''
    }
@@ -43,7 +50,7 @@ const Posts = (props) => {
       <div className={classes.posts}>
          <h3>My posts</h3>
          <ProfileFormRedux onSubmit={onSubmit} />
-         {posts(props)}
+         {posts()}
       </div>
    )
 }

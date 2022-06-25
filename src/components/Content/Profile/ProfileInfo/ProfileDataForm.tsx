@@ -1,6 +1,7 @@
 import React from "react";
-import { Field } from "redux-form";
+import { DecoratedComponentClass, DecoratedFormProps, Field, InjectedFormProps } from "redux-form";
 import { reduxForm } from "redux-form";
+import { ProfileType } from "../../../../types/types";
 import { maxLengthCreator } from "../../../../utils/validators/validators";
 import { Element } from "../../../common/FormsControls/FormsControls";
 import classes from './ProfileInfo.module.css';
@@ -10,7 +11,11 @@ const maxNameLength = maxLengthCreator(20)
 
 const Input = Element('input')
 
-const ProfileDataForm = ({ handleSubmit, profile, error }) => {
+type Props = {
+   profile: ProfileType
+}
+
+const ProfileDataForm: React.FC<InjectedFormProps & Props> = ({ handleSubmit, profile, error }) => {
 
    const ContactFields = () => {
       const names = Object.getOwnPropertyNames(profile.contacts)
@@ -34,12 +39,12 @@ const ProfileDataForm = ({ handleSubmit, profile, error }) => {
       </div>
       <div>
          <div>Contacts</div>
-         <ContactFields />
+         {ContactFields()}
       </div>
    </form>)
 }
 
-const ProfileDataReduxForm = reduxForm({
+const ProfileDataReduxForm: DecoratedComponentClass<{}, DecoratedFormProps<{}, {}, string> | Props> = reduxForm({
    form: 'edit-profile'
 })(ProfileDataForm)
 

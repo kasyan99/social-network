@@ -12,6 +12,7 @@ const SET_AVATAR = 'social-network/profile/SET-AVATAR'
 
 
 export type InitialStateType = {
+   newPostText?: string
    profile: ProfileType | null
    posts: Array<Post>
    status: string

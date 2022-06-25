@@ -5,8 +5,13 @@ import { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatusT
 import { Navigate, useParams } from 'react-router-dom';
 import { compose } from "redux";
 
+type Props = {
+   getUserProfilThunkCreator: (userId: number) => void
+   getUserStatusThunkCreator: (userId: number) => void
+   userId: number
+}
 
-class ProfileContainer extends React.Component {
+class ProfileContainer extends React.Component<Props> {
 
    componentDidMount() {
       this.props.getUserProfilThunkCreator(this.props.userId)
@@ -27,7 +32,7 @@ const mapStateToProps = state => ({
 const ProfileById = (props) => {
 
 
-   let owner
+   let owner: boolean
 
    let { userId } = useParams();
    if (!userId) {
@@ -44,7 +49,7 @@ const ProfileById = (props) => {
    return <ProfileContainer userId={userId} owner={owner} {...props} />
 }
 
-const ProfileContainerConnected = compose(
+const ProfileContainerConnected = compose<React.ComponentType>(
    connect(mapStateToProps, { getUserProfilThunkCreator, getUserStatusThunkCreator, updateUserStatus: updateUserStatusThunkCreator, setAvatar: setAvatarThunkCreator, updateProfileData })
 )(ProfileById)
 

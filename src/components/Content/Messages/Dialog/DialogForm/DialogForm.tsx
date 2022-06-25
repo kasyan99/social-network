@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, SubmitHandler } from 'redux-form';
 import { reduxForm } from "redux-form";
-import { maxLengthCreator, requiredField } from '../../../../../utils/validators/validators';
+import { maxLengthCreator } from '../../../../../utils/validators/validators';
 import { Element } from '../../../../common/FormsControls/FormsControls';
 import styles from './DialogForm.module.css';
 
@@ -20,7 +20,7 @@ const DialogForm: React.FC<Props> = (props) => {
          <Field
             component={Textarea}
             name={"newMessageText"}
-            validate={[requiredField, maxLength100]}
+            validate={[maxLength100]}
             placeholder={'Message text...'}
          />
          <button className='btn'>Send message</button>
