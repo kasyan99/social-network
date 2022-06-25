@@ -1,5 +1,5 @@
 import { getAuthUserDataThunkCreator } from "./auth-reducer"
-import { InferActionsTypes } from "./redux-store"
+import { BaseThunkType, InferActionsTypes } from "./redux-store"
 
 const INITIALIZED_SUCCESS = 'social-network/app/INITIALIZED-SUCCESS'
 
@@ -9,6 +9,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 type ActionsType = InferActionsTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionsType>
 
 const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
    switch (action.type) {
@@ -28,11 +29,11 @@ export const actions = {
 }
 // export const actionInitializedSuccess = (): ActionInitializedSuccessType => ({ type: INITIALIZED_SUCCESS })
 
-export const initializeThunkCreator = () => (dispatch: any) => {
-   dispatch(getAuthUserDataThunkCreator())
-      .then(() => {
-         dispatch(actions.initializedSuccess())
-      })
+export const initializeThunkCreator = (): ThunkType => async (dispatch) => {
+   await dispatch(getAuthUserDataThunkCreator())
+
+   dispatch(actions.initializedSuccess())
+
 }
 
 export default appReducer

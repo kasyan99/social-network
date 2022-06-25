@@ -61,7 +61,7 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
    }
 }
 
-export const logoutThunkCreator = () => async (dispatch: any) => {
+export const logoutThunkCreator = (): ThunkType => async (dispatch) => {
    const response = await authAPI.logout()
 
    if (response.status === 200) {
