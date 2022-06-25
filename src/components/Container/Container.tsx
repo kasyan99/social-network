@@ -1,7 +1,12 @@
 import React from 'react';
 import styles from './Container.module.css';
 
-function Container(props) {
+type Props = {
+   stretch?: boolean
+   element: any
+}
+
+const Container: React.FC<Props> = (props) => {
    return (
       <div className={`${styles.container} ${props.stretch ? styles.container_stretch : ''}`}>
          {props.element}

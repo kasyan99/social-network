@@ -2,8 +2,9 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Container from '../Container/Container';
 import classes from './Header.module.css';
+import { Props } from './HeaderContainer';
 
-function Header(props) {
+const Header: React.FC<Props> = (props) => {
    return (
       <header className={classes.header}>
          <Container

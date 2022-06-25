@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from './Aside.module.css';
+import { ItemListType } from './AsideContainer';
 
-function Aside(props) {
-
+const Aside: React.FC<ItemListType> = (props) => {
    return (
       <aside className={classes.aside}>
          <nav>

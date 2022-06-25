@@ -1,10 +1,18 @@
+import React from "react";
 import { connect } from "react-redux";
+import { AppStateType } from "../../reduxF/redux-store";
 import Aside from "./Aside";
 import NavigationItem from './NavigationItem/NavigationItem';
 
-const mapStateToProps = (state) => {
+type MenuItemType = {
+   id: number
+   linkName: string
+   linkPath: string
+}
+
+const mapStateToProps = (state: AppStateType) => {
    const menuList = state.aside.menuList
-   function createItemList(menuList) {
+   const createItemList = (menuList: Array<MenuItemType>) => {
       return menuList.map(
          menuItem => <NavigationItem linkName={menuItem.linkName} linkPath={menuItem.linkPath} key={menuItem.id} />
       )
@@ -15,10 +23,8 @@ const mapStateToProps = (state) => {
    }
 }
 
-const mapDispatchToProps = (dispatch) => {
-   return {
-   }
-}
+export type ItemListType = ReturnType<typeof mapStateToProps>
 
-const AsideContainer = connect(mapStateToProps, mapDispatchToProps)(Aside)
+
+const AsideContainer = connect(mapStateToProps, {})(Aside)
 export default AsideContainer
