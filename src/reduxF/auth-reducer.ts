@@ -56,7 +56,6 @@ export const loginThunkCreator = (email: string, password: string, rememberMe: b
       }
 
    } else {
-      console.log('ckeck login', checkLoginResponse.data)
       dispatch(stopSubmit('loginForm', { _error: 'Email or password is wrong' }))
    }
 }

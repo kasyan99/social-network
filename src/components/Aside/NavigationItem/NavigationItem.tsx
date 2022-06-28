@@ -8,7 +8,6 @@ type ItemType = {
 }
 
 const NavigationItem: React.FC<ItemType> = (props) => {
-   console.log(props);
    return (
       <li className={classes.navigationItem}>
          <NavLink

@@ -20,7 +20,6 @@ const ProfileInfo: React.FC<PropsType> = ({ profile, status, updateUserStatus, o
 
    const onSubmit = (formData: ProfileType) => {
       updateProfileData(formData).then(() => {
-         console.log(formData)
          setEditMode(false)
       })
    }
