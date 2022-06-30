@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
-// import { usersActions.CurrentPage, usersActions.Followt, usersActions.Unfollow, usersActions.ToggleIsFollowing, getUsersThunkCreator, followToggleThunkCreator } from "../../../reduxF/users-reducer";
 import { usersActions, getUsersThunkCreator, followToggleThunkCreator } from "../../../reduxF/users-reducer";
 import Users from "./Users";
 import React from "react"
-import { getCurrentPage, getDisplayedPagePortion, getFollowingInProgress, getIsFetching, getPageSize, getUsersCount, getUsersList } from "../../../reduxF/users-selectors";
+import { getCurrentPage, getDisplayedPagePortion, getFilterByName, getFollowingInProgress, getIsFetching, getPageSize, getUsersCount, getUsersList } from "../../../reduxF/users-selectors";
 import { ProfileType } from "../../../types/types";
 import { AppStateType } from "../../../reduxF/redux-store";
 
@@ -16,30 +15,21 @@ type UsersMapStateToPropsType = {
    isFetching: boolean
    followingInProgress: Array<number>
    displayedPagePortion: number
+   filterByname: string
 }
 
 type UsersMapDispatchToPropsType = {
    follow: (id: number) => void
    unfollow: (id: number) => void
-   setCurrentPage: (number: number) => void
+   setCurrentPage: (number: number, filterByname: string) => void
    toggleIsFollowing: (isFetching: boolean, userId: number) => void
-   getUsers: (currentPage: number, pageSize: number) => void
+   getUsers: (currentPage: number, pageSize: number, filterByName?: string) => void
    followToggle: (user: ProfileType) => void
+   setFilterByName: (filterByName: string) => void
 }
 
 export type PropsUsersType = UsersMapStateToPropsType & UsersMapDispatchToPropsType
-// export type PropsUsersType = {
-//    usersList: Array<ProfileType>
-//    pageSize: number
-//    usersCount: number
-//    currentPage: number
-//    isFetching: boolean
-//    followingInProgress: boolean
-//    displayedPagePortion: number
-//    getUsers: (currentPage: number, pageSize: number) => void
-//    setCurrentPage: (number: number) => void
 
-// }
 
 class UsersAJAXContainer extends React.Component<PropsUsersType> {
 
@@ -48,9 +38,9 @@ class UsersAJAXContainer extends React.Component<PropsUsersType> {
       this.props.getUsers(currentPage, pageSize)
 
    }
-   setCurrentPage = (pageNumber: number) => {
+   setCurrentPage = (pageNumber: number, filterByname: string) => {
       const { pageSize } = this.props
-      this.props.getUsers(pageNumber, pageSize)
+      this.props.getUsers(pageNumber, pageSize, filterByname)
    }
    render() {
       return <Users
@@ -68,6 +58,9 @@ class UsersAJAXContainer extends React.Component<PropsUsersType> {
          toggleIsFollowing={this.props.toggleIsFollowing}
          setCurrentPage={this.setCurrentPage}
          followToggle={this.props.followToggle}
+
+         filterByname={this.props.filterByname}
+         setFilterByName={this.props.setFilterByName}
       />
    }
 }
@@ -80,7 +73,8 @@ const mapStateToProps = (state: AppStateType): UsersMapStateToPropsType => {
       currentPage: getCurrentPage(state),
       isFetching: getIsFetching(state),
       followingInProgress: getFollowingInProgress(state),
-      displayedPagePortion: getDisplayedPagePortion(state)
+      displayedPagePortion: getDisplayedPagePortion(state),
+      filterByname: getFilterByName(state)
    }
 }
 
@@ -90,7 +84,8 @@ const mapDispatchToProps: UsersMapDispatchToPropsType = {
    setCurrentPage: usersActions.CurrentPage,
    toggleIsFollowing: usersActions.ToggleIsFollowing,
    getUsers: getUsersThunkCreator,
-   followToggle: followToggleThunkCreator
+   followToggle: followToggleThunkCreator,
+   setFilterByName: usersActions.setFilterByName
 }
 
 const UsersContainer = connect<UsersMapStateToPropsType, UsersMapDispatchToPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)(UsersAJAXContainer)

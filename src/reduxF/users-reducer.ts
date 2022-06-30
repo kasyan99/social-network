@@ -9,6 +9,7 @@ const SET_CURRENT_PAGE = 'social-network/users/SET-CURRENT-PAGE'
 const SET_TOTAL_USERS_COUNT = 'social-network/users/SET-TOTAL-USERS-COUNT'
 const TOGGLE_FETCH = 'social-network/users/TOGGLE-FETCH'
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'social-network/users/TOGGLE-IS-FOLLOWING-PROGRESS'
+const SET_FILTER_BY_NAME = 'social-network/users/SET-FILTER-BY-NAME'
 
 const initialState = {
    usersList: [] as Array<ProfileType>,
@@ -17,7 +18,8 @@ const initialState = {
    displayedPagePortion: 3,
    currentPage: 1,
    isFetching: false,
-   followingInProgress: [] as Array<number>
+   followingInProgress: [] as Array<number>,
+   filterByName: ''
 }
 
 type InitialStateType = typeof initialState
@@ -67,6 +69,11 @@ function usersReducer(state = initialState, action: ActionsUsersType): InitialSt
                ? [...state.followingInProgress, action.userId]
                : state.followingInProgress.filter(id => id !== action.userId)
          }
+      case SET_FILTER_BY_NAME:
+         return {
+            ...state,
+            filterByName: action.filterByName
+         }
       default:
          return state
    }
@@ -74,7 +81,7 @@ function usersReducer(state = initialState, action: ActionsUsersType): InitialSt
 
 
 export const usersActions = {
-   SetUsers: (users: Array<ProfileType>) => ({ type: SET_USERS, users } as const),
+   setUsers: (users: Array<ProfileType>) => ({ type: SET_USERS, users } as const),
 
    Followt: (userId: number) => ({ type: FOLLOW, id: userId } as const),
 
@@ -86,19 +93,35 @@ export const usersActions = {
 
    ToggleIsFetching: (isFetching: boolean) => ({ type: TOGGLE_FETCH, isFetching } as const),
 
-   ToggleIsFollowing: (isFetching: boolean, userId: number) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId } as const)
+   ToggleIsFollowing: (isFetching: boolean, userId: number) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId } as const),
+
+   setFilterByName: (filterByName: string) => ({ type: SET_FILTER_BY_NAME, filterByName } as const)
+
 }
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkType =>
-   async (dispatch, getState) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number, filterByName: string): ThunkType =>
+   async (dispatch) => {
       dispatch(usersActions.CurrentPage(currentPage))
       dispatch(usersActions.ToggleIsFetching(true))
 
-      const response = await usersAPI.getUsers(currentPage, pageSize)
+      const response = await usersAPI.getUsers(currentPage, pageSize, filterByName)
 
       dispatch(usersActions.ToggleIsFetching(false))
-      dispatch(usersActions.SetUsers(response.users))
+      dispatch(usersActions.setUsers(response.users))
+      dispatch(usersActions.SetTotalUsersCount(Number(response.totalCount)))
+
+   }
+
+export const getFilteredUsersThunkCreator = (name: string): ThunkType =>
+   async (dispatch, getState) => {
+      // dispatch(usersActions.setFilteredUsers(id))
+      dispatch(usersActions.ToggleIsFetching(true))
+
+      const response = await usersAPI.getFilteredUsers(name)
+
+      dispatch(usersActions.ToggleIsFetching(false))
+      dispatch(usersActions.setUsers(response.users))
       dispatch(usersActions.SetTotalUsersCount(Number(response.totalCount)))
 
    }

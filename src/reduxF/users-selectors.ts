@@ -27,3 +27,7 @@ export const getFollowingInProgress = (state: AppStateType) => {
 export const getDisplayedPagePortion = (state: AppStateType) => {
    return state.users.displayedPagePortion
 }
+
+export const getFilterByName = (state: AppStateType) => {
+   return state.users.filterByName
+}

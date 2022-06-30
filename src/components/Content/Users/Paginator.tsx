@@ -6,11 +6,12 @@ type PropsType = {
    usersCount: number
    pageSize: number
    currentPage: number
-   setCurrentPage: (number: number) => void
+   setCurrentPage: (number: number, filterByname: string) => void
    displayedPagePortion: number
+   filterByname: string
 }
 
-const Paginator: React.FC<PropsType> = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion }) => {
+const Paginator: React.FC<PropsType> = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion, filterByname }) => {
    const pageCount: number = Math.ceil(usersCount / pageSize)
    const pageNumbers: Array<number> = []
 
@@ -33,7 +34,7 @@ const Paginator: React.FC<PropsType> = ({ usersCount, pageSize, currentPage, set
                <span
                   className={currentPage === number ? classes.selectedPage : ''}
                   key={number}
-                  onClick={() => setCurrentPage(number)}
+                  onClick={() => setCurrentPage(number, filterByname)}
                >
                   {number}
                </span>
