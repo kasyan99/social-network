@@ -1,4 +1,5 @@
 import { usersAPI } from "../api/users-api"
+import { FilterType } from "../components/Content/Users/Users"
 import { ProfileType } from "../types/types"
 import { InferActionsTypes, BaseThunkType } from "./redux-store"
 
@@ -9,7 +10,7 @@ const SET_CURRENT_PAGE = 'social-network/users/SET-CURRENT-PAGE'
 const SET_TOTAL_USERS_COUNT = 'social-network/users/SET-TOTAL-USERS-COUNT'
 const TOGGLE_FETCH = 'social-network/users/TOGGLE-FETCH'
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'social-network/users/TOGGLE-IS-FOLLOWING-PROGRESS'
-const SET_FILTER_BY_NAME = 'social-network/users/SET-FILTER-BY-NAME'
+const SET_FILTER = 'social-network/users/SET-FILTER'
 
 const initialState = {
    usersList: [] as Array<ProfileType>,
@@ -19,7 +20,10 @@ const initialState = {
    currentPage: 1,
    isFetching: false,
    followingInProgress: [] as Array<number>,
-   filterByName: ''
+   filter: {
+      filterByName: '',
+      filterByFollow: 'all'
+   }
 }
 
 type InitialStateType = typeof initialState
@@ -69,10 +73,10 @@ function usersReducer(state = initialState, action: ActionsUsersType): InitialSt
                ? [...state.followingInProgress, action.userId]
                : state.followingInProgress.filter(id => id !== action.userId)
          }
-      case SET_FILTER_BY_NAME:
+      case SET_FILTER:
          return {
             ...state,
-            filterByName: action.filterByName
+            filter: action.filter
          }
       default:
          return state
@@ -95,17 +99,17 @@ export const usersActions = {
 
    ToggleIsFollowing: (isFetching: boolean, userId: number) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId } as const),
 
-   setFilterByName: (filterByName: string) => ({ type: SET_FILTER_BY_NAME, filterByName } as const)
+   setFilter: (filter: FilterType) => ({ type: SET_FILTER, filter } as const)
 
 }
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number, filterByName: string): ThunkType =>
+export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FilterType): ThunkType =>
    async (dispatch) => {
       dispatch(usersActions.CurrentPage(currentPage))
       dispatch(usersActions.ToggleIsFetching(true))
 
-      const response = await usersAPI.getUsers(currentPage, pageSize, filterByName)
+      const response = await usersAPI.getUsers(currentPage, pageSize, filter)
 
       dispatch(usersActions.ToggleIsFetching(false))
       dispatch(usersActions.setUsers(response.users))

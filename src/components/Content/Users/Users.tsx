@@ -1,4 +1,4 @@
-import { Formik } from "formik"
+import { Field, Formik } from "formik"
 import React from "react"
 import Preloader from "../../common/Preloader"
 import Paginator from "./Paginator"
@@ -6,17 +6,7 @@ import User from "./User/User"
 import classes from './Users.module.css'
 import { PropsUsersType } from "./UsersContainer"
 
-// type PropsType = {
-//    usersCount: number
-//    pageSize: number
-//    currentPage: number
-//    setCurrentPage: (number: number) => void
-//    displayedPagePortion: number
-//    isFetching: boolean
-//    usersList: Array<ProfileType>
-// }
-
-const Users: React.FC<PropsUsersType> = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion, filterByname, setFilterByName, ...props }) => {
+const Users: React.FC<PropsUsersType> = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion, filter, setFilter, ...props }) => {
    return (
       <div className={classes.users}>
          <UsersSearchForm
@@ -24,7 +14,7 @@ const Users: React.FC<PropsUsersType> = ({ usersCount, pageSize, currentPage, se
             usersCount={usersCount}
             pageSize={pageSize}
             currentPage={currentPage}
-            setFilterByName={setFilterByName}
+            setFilter={setFilter}
          />
          <Paginator
             usersCount={usersCount}
@@ -33,7 +23,7 @@ const Users: React.FC<PropsUsersType> = ({ usersCount, pageSize, currentPage, se
             setCurrentPage={setCurrentPage}
             displayedPagePortion={displayedPagePortion}
 
-            filterByname={filterByname}
+            filter={filter}
 
          />
 
@@ -51,31 +41,41 @@ const Users: React.FC<PropsUsersType> = ({ usersCount, pageSize, currentPage, se
 }
 
 type UsersSearchFormPropsType = {
-   getUsers: (currentPage: number, pageSize: number, filterByname: string) => void
+   getUsers: (currentPage: number, pageSize: number, filter: FilterType) => void
    usersCount: number
    pageSize: number
    currentPage: number
-   setFilterByName: (filterByName: string) => void
+   setFilter: (filter: FilterType) => void
+}
+
+export type FilterType = {
+   filterByName: string
+   filterByFollow: string
 }
 
 const UsersSearchForm: React.FC<UsersSearchFormPropsType> = (props) => {
-   const onSubmit = (values) => {
+
+   const onSubmit = (values: FilterType) => {
       console.log(values);
-      props.setFilterByName(values.name)
-      props.getUsers(1, props.pageSize, values.name)
+      props.setFilter(values)
+      props.getUsers(1, props.pageSize, values)
    }
    return <div>
       <Formik
-         initialValues={{ name: '' }}
+         initialValues={{ filterByName: '', filterByFollow: 'all' }}
          onSubmit={onSubmit}
       >
          {({
-            values,
             handleSubmit,
             handleChange
          }) => (
             <form onSubmit={handleSubmit}>
-               <input type="text" name="name" value={values.id} onChange={handleChange} />
+               <Field type="text" name="filterByName" placeholder="Search by name" onChange={handleChange} />
+               <Field as="select" name="filterByFollow">
+                  <option value="all">All</option>
+                  <option value="true">Followed</option>
+                  <option value="false">Unfollowed</option>
+               </Field>
                <button type="submit">
                   Submit
                </button>

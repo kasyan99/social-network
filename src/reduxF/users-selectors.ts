@@ -28,6 +28,6 @@ export const getDisplayedPagePortion = (state: AppStateType) => {
    return state.users.displayedPagePortion
 }
 
-export const getFilterByName = (state: AppStateType) => {
-   return state.users.filterByName
+export const getFilter = (state: AppStateType) => {
+   return state.users.filter
 }

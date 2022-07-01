@@ -1,17 +1,18 @@
 import React from "react"
 import { useState } from "react"
+import { FilterType } from "./Users"
 import classes from './Users.module.css'
 
 type PropsType = {
    usersCount: number
    pageSize: number
    currentPage: number
-   setCurrentPage: (number: number, filterByname: string) => void
+   setCurrentPage: (number: number, filter: FilterType) => void
    displayedPagePortion: number
-   filterByname: string
+   filter: FilterType
 }
 
-const Paginator: React.FC<PropsType> = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion, filterByname }) => {
+const Paginator: React.FC<PropsType> = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion, filter }) => {
    const pageCount: number = Math.ceil(usersCount / pageSize)
    const pageNumbers: Array<number> = []
 
@@ -34,7 +35,7 @@ const Paginator: React.FC<PropsType> = ({ usersCount, pageSize, currentPage, set
                <span
                   className={currentPage === number ? classes.selectedPage : ''}
                   key={number}
-                  onClick={() => setCurrentPage(number, filterByname)}
+                  onClick={() => setCurrentPage(number, filter)}
                >
                   {number}
                </span>

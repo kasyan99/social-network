@@ -1,10 +1,18 @@
+import { FilterType } from "../components/Content/Users/Users"
 import { ProfileType } from "../types/types"
 import { instance } from "./api"
 import { profileAPI } from "./profile-api"
 
 export const usersAPI = {
-   async getUsers(currentPage = 1, pageSize = 4, filterByName: string) {
-      const response = await instance.get<Array<ProfileType>>(`users?_page=${currentPage}&_limit=${pageSize}` + `${filterByName ? `&fullName_like=${filterByName}` : ''}`)
+   async getUsers(currentPage = 1, pageSize = 4, filter: FilterType) {
+      console.log('filterr', filter);
+
+      const filterByName = `${filter.filterByName ? `&fullName_like=${filter.filterByName}` : ''}`
+      const filterByFollow = `${filter.filterByFollow !== 'all' ? `&followed=${filter.filterByFollow}` : ''}`
+
+      const getFilter = filter ? filterByName + filterByFollow : ''
+
+      const response = await instance.get<Array<ProfileType>>(`users?_page=${currentPage}&_limit=${pageSize}` + getFilter)
 
       return {
          users: response.data,
