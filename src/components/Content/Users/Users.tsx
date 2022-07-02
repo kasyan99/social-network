@@ -1,20 +1,58 @@
 import { Field, Formik } from "formik"
-import React from "react"
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { followToggleThunkCreator, getUsersThunkCreator, usersActions } from "../../../reduxF/users-reducer"
+import { getCurrentPage, getDisplayedPagePortion, getFilter, getFollowingInProgress, getIsFetching, getPageSize, getUsersCount, getUsersList } from "../../../reduxF/users-selectors"
+import { ProfileType } from "../../../types/types"
 import Preloader from "../../common/Preloader"
 import Paginator from "./Paginator"
 import User from "./User/User"
 import classes from './Users.module.css'
-import { PropsUsersType } from "./UsersContainer"
 
-const Users: React.FC<PropsUsersType> = ({ usersCount, pageSize, currentPage, setCurrentPage, displayedPagePortion, filter, setFilter, ...props }) => {
+const Users: React.FC = () => {
+
+   const usersList = useSelector(getUsersList)
+   const pageSize = useSelector(getPageSize)
+   const usersCount = useSelector(getUsersCount)
+   const currentPage = useSelector(getCurrentPage)
+   const displayedPagePortion = useSelector(getDisplayedPagePortion)
+   const filter = useSelector(getFilter)
+   const isFetching = useSelector(getIsFetching)
+
+   const followingInProgress = useSelector(getFollowingInProgress)
+
+   const dispach = useDispatch()
+
+   const setCurrentPage = (pageNumber: number, filter: FilterType) => {
+      dispach(getUsersThunkCreator(pageNumber, pageSize, filter))
+   }
+
+   const onFilterChanged = () => {
+      dispach(getUsersThunkCreator(1, pageSize, filter))
+   }
+
+   const setFilter = (filter: FilterType) => {
+      dispach(usersActions.setFilter(filter))
+   }
+
+   const followToggle = (user: ProfileType) => {
+      dispach(followToggleThunkCreator(user))
+   }
+
+   useEffect(() => {
+      dispach(getUsersThunkCreator(currentPage, pageSize, filter))
+   }, [])
+
    return (
       <div className={classes.users}>
          <UsersSearchForm
-            getUsers={props.getUsers}
             usersCount={usersCount}
             pageSize={pageSize}
             currentPage={currentPage}
+
             setFilter={setFilter}
+
+            onFilterChanged={onFilterChanged}
          />
          <Paginator
             usersCount={usersCount}
@@ -27,13 +65,14 @@ const Users: React.FC<PropsUsersType> = ({ usersCount, pageSize, currentPage, se
 
          />
 
-         {props.isFetching
+         {isFetching
             ? <Preloader />
-            : props.usersList.map(user =>
+            : usersList.map(user =>
                <User
                   key={user.id}
                   user={user}
-                  {...props}
+                  followingInProgress={followingInProgress}
+                  followToggle={followToggle}
                />)
          }
       </div >
@@ -41,11 +80,11 @@ const Users: React.FC<PropsUsersType> = ({ usersCount, pageSize, currentPage, se
 }
 
 type UsersSearchFormPropsType = {
-   getUsers: (currentPage: number, pageSize: number, filter: FilterType) => void
    usersCount: number
    pageSize: number
    currentPage: number
    setFilter: (filter: FilterType) => void
+   onFilterChanged: () => void
 }
 
 export type FilterType = {
@@ -54,11 +93,12 @@ export type FilterType = {
 }
 
 const UsersSearchForm: React.FC<UsersSearchFormPropsType> = (props) => {
+   const dispach = useDispatch()
 
    const onSubmit = (values: FilterType) => {
       console.log(values);
       props.setFilter(values)
-      props.getUsers(1, props.pageSize, values)
+      dispach(getUsersThunkCreator(1, props.pageSize, values))
    }
    return <div>
       <Formik

@@ -5,17 +5,11 @@ import classes from './User.module.css'
 
 type Props = {
    user: ProfileType
-   follow: (id: number) => void
    followToggle: (user: ProfileType) => void
    followingInProgress: Array<number>
-   getUsers: (currentPage: number, pageSize: number) => void
-   isFetching: boolean
-   toggleIsFollowing: (isFetching: boolean, userId: number) => void
-   unfollow: (id: number) => void
-   usersList: Array<ProfileType>
 }
 
-const User: React.FC<Props> = ({ user, ...props }) => {
+const User: React.FC<Props> = ({ user, followingInProgress, followToggle }) => {
 
    const imgSrc = user.avatar || "https://img2.freepng.ru/20180421/lyw/kisspng-computer-icons-avatar-clip-art-5adb009b938864.3066118615243019796043.jpg"
    const followedClass = 'btn ' + (user.followed ? classes.unfollow : classes.follow)
@@ -28,9 +22,9 @@ const User: React.FC<Props> = ({ user, ...props }) => {
             </NavLink>
 
             <button
-               disabled={props.followingInProgress.some(id => id === user.id)}
+               disabled={followingInProgress.some(id => id === user.id)}
                className={followedClass}
-               onClick={() => { props.followToggle(user) }}
+               onClick={() => { followToggle(user) }}
             >
                {user.followed ? 'Unfollow' : 'Follow'}
             </button>

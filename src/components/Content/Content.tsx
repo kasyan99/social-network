@@ -5,7 +5,7 @@ import styles from './Content.module.css';
 import ProfileContainer from './Profile/ProfileContainer';
 
 const MessagesContainer = React.lazy(() => import('./Messages/MessagesContainer'))
-const UsersContainer = React.lazy(() => import('./Users/UsersContainer'))
+const Users = React.lazy(() => import('./Users/Users'))
 const LoginPage = React.lazy(() => import('../Login/Login'))
 
 const Content: React.FC = () => {
@@ -19,7 +19,7 @@ const Content: React.FC = () => {
                   <Route path=":userId" element={<ProfileContainer />} />
                </Route>
                <Route path="/messages/*" element={<MessagesContainer />} />
-               <Route path="/users/*" element={<UsersContainer />} />
+               <Route path="/users/*" element={<Users />} />
                <Route path="/login/*" element={<LoginPage />} />
             </Routes>
          </Suspense>
