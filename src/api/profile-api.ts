@@ -30,7 +30,7 @@ export const profileAPI = {
     const response = await authAPI.me()
     const userId = response.data.me.id
     return await instance.patch(`users/${userId}`, {
-      status: status,
+      status,
     })
   },
   async updateProfileData(profile: ProfileType) {
