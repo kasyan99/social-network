@@ -6,7 +6,7 @@ import classes from './User.module.css'
 type Props = {
    user: ProfileType
    followToggle: (user: ProfileType) => void
-   followingInProgress: Array<number>
+   followingInProgress: Array<string>
 }
 
 const User: React.FC<Props> = ({ user, followingInProgress, followToggle }) => {
@@ -17,12 +17,12 @@ const User: React.FC<Props> = ({ user, followingInProgress, followToggle }) => {
    return (
       <div className={classes.user}>
          <div className={classes.user__header}>
-            <NavLink to={`/profile/${user.id}`}>
+            <NavLink to={`/profile/${user._id}`}>
                <img src={imgSrc} alt="avatar" />
             </NavLink>
 
             <button
-               disabled={followingInProgress.some(id => id === user.id)}
+               disabled={followingInProgress.some(id => id === user._id)}
                className={followedClass}
                onClick={() => { followToggle(user) }}
             >

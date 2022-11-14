@@ -1,6 +1,7 @@
 import { Field, Formik } from "formik"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useLocation, useNavigate } from "react-router-dom"
 import { followToggleThunkCreator, getUsersThunkCreator, usersActions } from "../../../reduxF/users-reducer"
 import { getCurrentPage, getDisplayedPagePortion, getFilter, getFollowingInProgress, getIsFetching, getPageSize, getUsersCount, getUsersList } from "../../../reduxF/users-selectors"
 import { ProfileType } from "../../../types/types"
@@ -39,9 +40,33 @@ const Users: React.FC = () => {
       dispach(followToggleThunkCreator(user))
    }
 
+   const navigate = useNavigate()
+   // console.log(navigate);
+
+   const location = useLocation()
+
+   useEffect(() => {
+      const obj = new URLSearchParams(location.search)
+      console.log('first', obj.get('fullName_like'));
+
+      const initialFilter: FilterType = {
+         filterByName: obj.get('fullName_like'),
+         filterByFollow: obj.get('followed')
+      }
+      dispach(usersActions.setFilter(initialFilter))
+
+   }, [])
+
    useEffect(() => {
       dispach(getUsersThunkCreator(currentPage, pageSize, filter))
-   }, [])
+
+      const byName = filter.filterByName ? `&fullName_like=${filter.filterByName}` : ''
+      const byFollow = filter.filterByFollow ? `followed=${filter.filterByFollow}` : ''
+
+      navigate(`../users?${byFollow}${byName}`, { replace: true })
+
+      console.log(location);
+   }, [filter])
 
    return (
       <div className={classes.users}>
@@ -69,7 +94,7 @@ const Users: React.FC = () => {
             ? <Preloader />
             : usersList.map(user =>
                <User
-                  key={user.id}
+                  key={user._id}
                   user={user}
                   followingInProgress={followingInProgress}
                   followToggle={followToggle}
@@ -100,6 +125,7 @@ const UsersSearchForm: React.FC<UsersSearchFormPropsType> = (props) => {
       props.setFilter(values)
       dispach(getUsersThunkCreator(1, props.pageSize, values))
    }
+
    return <div>
       <Formik
          initialValues={{ filterByName: '', filterByFollow: 'all' }}

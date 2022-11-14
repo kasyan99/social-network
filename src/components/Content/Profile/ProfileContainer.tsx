@@ -6,9 +6,9 @@ import { Navigate, useParams } from 'react-router-dom';
 import { compose } from "redux";
 
 type Props = {
-   getUserProfilThunkCreator: (userId: number) => void
-   getUserStatusThunkCreator: (userId: number) => void
-   userId: number
+   getUserProfilThunkCreator: (userId: string) => void
+   getUserStatusThunkCreator: (userId: string) => void
+   userId: string
 }
 
 class ProfileContainer extends React.Component<Props> {
