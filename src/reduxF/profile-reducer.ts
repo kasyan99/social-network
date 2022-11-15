@@ -116,13 +116,7 @@ export const updateUserStatusThunkCreator =
 
 export const setAvatarThunkCreator =
   (avatar: any): ThunkType =>
-  async (dispatch) => {
-    const response = await profileAPI.setAvatar(avatar)
-
-    if (response.statusText === "OK") {
-      dispatch(profileActions.setAvatar(avatar))
-    }
-  }
+  async (dispatch) => {}
 
 export const updateProfileData =
   (profile: ProfileType | null): ThunkType =>
@@ -134,8 +128,6 @@ export const updateProfileData =
       dispatch(getUserProfilThunkCreator(userId))
     } else {
       dispatch(stopSubmit("edit-profile", { _error: "response Error" }))
-      // dispatch(stopSubmit("edit-profile", { _error: response.data.messages[0] }))
-      // return Promise.reject(response.data.messages[0])
     }
   }
 

@@ -35,6 +35,7 @@ const ProfileById = (props) => {
    let owner: boolean
 
    let { userId } = useParams();
+
    if (!userId) {
       userId = props.authedUser
       if (!userId) {
@@ -43,7 +44,7 @@ const ProfileById = (props) => {
    }
 
    if (props.profile) {
-      owner = props.authedUser === props.profile.id
+      owner = props.authedUser === props.profile._id
    }
 
    return <ProfileContainer userId={userId} owner={owner} {...props} />

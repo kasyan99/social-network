@@ -1,11 +1,5 @@
-/* .dialog__list {
-   overflow-y: scroll;
-} */
-
 .dialog__message {
    margin-bottom: 10px;
-   /* display: flex;
-   justify-content: end; */
 }
 
 .dialog__message p {

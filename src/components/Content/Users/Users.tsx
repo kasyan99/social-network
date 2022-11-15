@@ -41,13 +41,11 @@ const Users: React.FC = () => {
    }
 
    const navigate = useNavigate()
-   // console.log(navigate);
 
    const location = useLocation()
 
    useEffect(() => {
       const obj = new URLSearchParams(location.search)
-      console.log('first', obj.get('fullName_like'));
 
       const initialFilter: FilterType = {
          filterByName: obj.get('fullName_like'),
@@ -65,7 +63,6 @@ const Users: React.FC = () => {
 
       navigate(`../users?${byFollow}${byName}`, { replace: true })
 
-      console.log(location);
    }, [filter])
 
    return (
@@ -121,7 +118,6 @@ const UsersSearchForm: React.FC<UsersSearchFormPropsType> = (props) => {
    const dispach = useDispatch()
 
    const onSubmit = (values: FilterType) => {
-      console.log(values);
       props.setFilter(values)
       dispach(getUsersThunkCreator(1, props.pageSize, values))
    }

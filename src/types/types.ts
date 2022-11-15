@@ -1,5 +1,4 @@
 export type ProfileType = {
-  //   id: number
   _id: string
 
   fullName: string

@@ -128,7 +128,6 @@ export const getUsersThunkCreator =
 export const getFilteredUsersThunkCreator =
   (name: string): ThunkType =>
   async (dispatch, getState) => {
-    // dispatch(usersActions.setFilteredUsers(id))
     dispatch(usersActions.ToggleIsFetching(true))
 
     const response = await usersAPI.getFilteredUsers(name)

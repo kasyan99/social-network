@@ -63,7 +63,6 @@ export const loginThunkCreator =
 
     if (checkLoginResponse.data[0]) {
       const { id, login, email } = checkLoginResponse.data[0]
-      console.log("checkLoginResponse", checkLoginResponse.data[0])
 
       const loginResponse = await authAPI.login(id, login, email)
 
