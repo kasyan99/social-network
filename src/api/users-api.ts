@@ -1,6 +1,5 @@
 import { FilterType } from "../components/Content/Users/Users"
-import { ProfileType } from "../types/types"
-import { instance, instanceS } from "./api"
+import { instance } from "./api"
 import { profileAPI } from "./profile-api"
 
 export const usersAPI = {
@@ -16,37 +15,30 @@ export const usersAPI = {
 
     const getFilter = filter ? filterByName + filterByFollow : ""
 
-    const response = await instanceS.get<ProfileType[]>(
+    const response = await instance.get(
       `users?_page=${currentPage}&_limit=${pageSize}` + getFilter
     )
 
     return {
-      users: response.data,
-      totalCount: response.headers["x-total-count"],
+      users: response.data.users,
+      totalCount: response.data.totalCount,
     }
   },
-  async getFilteredUsers(name: string) {
-    const response = await instance.get<Array<ProfileType>>(
-      `users?_page=${1}&_limit=${2}&fullName_like=${name}`
-    )
 
-    return {
-      users: response.data,
-      totalCount: response.headers["x-total-count"],
-    }
-  },
-  unfollow(id: string) {
-    return instance.patch<ProfileType>(`users/${id}`, {
+  async unfollow(id: string) {
+    const data = await instance.patch(`users?_id=${id}`, {
       followed: false,
     })
+    return data
   },
-  follow(id: string) {
-    return instance.patch<ProfileType>(`users/${id}`, {
+  async follow(id: string) {
+    const data = await instance.patch(`users?_id=${id}`, {
       followed: true,
     })
+    return data
   },
-  getProfileInfo(userId: string) {
+  async getProfileInfo(userId: string) {
     console.warn(`You should use "profileAPI"`)
-    return profileAPI.getProfileInfo(userId)
+    return await profileAPI.getProfileInfo(userId)
   },
 }

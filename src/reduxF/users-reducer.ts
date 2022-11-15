@@ -125,18 +125,6 @@ export const getUsersThunkCreator =
     dispatch(usersActions.SetTotalUsersCount(Number(response.totalCount)))
   }
 
-export const getFilteredUsersThunkCreator =
-  (name: string): ThunkType =>
-  async (dispatch, getState) => {
-    dispatch(usersActions.ToggleIsFetching(true))
-
-    const response = await usersAPI.getFilteredUsers(name)
-
-    dispatch(usersActions.ToggleIsFetching(false))
-    dispatch(usersActions.setUsers(response.users))
-    dispatch(usersActions.SetTotalUsersCount(Number(response.totalCount)))
-  }
-
 const unfollowThunkCreator =
   (id: string): ThunkType =>
   async (dispatch) => {

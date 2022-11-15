@@ -1,4 +1,4 @@
-import { instanceS } from "./api"
+import { instance } from "./api"
 
 type MeResponseType = {
   isAuth: boolean
@@ -14,20 +14,20 @@ type CheckLoginResponseType = {
 
 export const authAPI = {
   me() {
-    return instanceS.get<MeResponseType>(`auth/me`)
+    return instance.get<MeResponseType>(`auth/me`)
   },
   checkLogin(email: string, password: string, rememberMe = false) {
-    return instanceS.get<CheckLoginResponseType>(
+    return instance.get<CheckLoginResponseType>(
       `auth?email=${email}&password=${password}`
     )
   },
   login(id: string, login: string, email: string) {
-    return instanceS.post<MeResponseType>("auth", {
+    return instance.post<MeResponseType>("auth", {
       isAuth: true,
       me: { id, login, email },
     })
   },
   logout() {
-    return instanceS.delete<MeResponseType>("auth")
+    return instance.delete<MeResponseType>("auth")
   },
 }
