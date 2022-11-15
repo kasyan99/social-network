@@ -17,3 +17,15 @@
 .selectedPage {
    color: #61dafb;
 }
+
+.userForm{
+   display: flex;
+   width: 30vw;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.userForm input,
+.userForm select{
+   margin-right: 10px;
+}

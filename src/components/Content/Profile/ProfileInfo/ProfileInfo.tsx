@@ -55,7 +55,7 @@ const ProfileInfo: React.FC<PropsType> = ({ profile, status, updateUserStatus, o
             </div>
             <div className={classes.profile__data}>
                {owner &&
-                  <button onClick={() => setEditMode(!editMode)}>edit</button>}
+                  <button onClick={() => setEditMode(!editMode)} className='btn btn-small'>edit</button>}
                {editMode
                   ? <ProfileDataForm initialValues={profile} onSubmit={onSubmit} profile={profile} />
                   : <ProfileData profile={profile} />}

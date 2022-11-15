@@ -16,7 +16,7 @@ const Header: React.FC<Props> = (props) => {
                   </div>
                   <div className={classes.header__col}>
                      {props.isAuth
-                        ? <span><span>{props.login}</span> <button onClick={props.logout}>logout</button></span>
+                        ? <span><span>{props.login}</span> <button onClick={props.logout} className='btn btn-small'>logout</button></span>
                         : <NavLink to='/login' className={classes.login}>login</NavLink>}
                   </div>
                </div>

@@ -12,25 +12,27 @@ const Input = Element('input')
 
 const LoginForm: React.FC<InjectedFormProps> = ({ handleSubmit, error }) => {
    return (
-      <form onSubmit={handleSubmit}>
-         <div>
-            <Field placeholder={"login"} component={Input} name={"login"}
-               validate={[requiredField]} />
-         </div>
-         <div>
-            <Field placeholder={"password"} component={Input} name={"password"}
-               validate={[requiredField]} />
-         </div>
-         <div>
+      <form onSubmit={handleSubmit} className={style.loginForm}>
+         <div className={style.loginInputsContainer}>
+            <div>
+               <Field placeholder={"login"} component={Input} name={"login"} className={style.textField}
+                  validate={[requiredField]} />
+            </div>
+            <div>
+               <Field placeholder={"password"} component={Input} name={"password"} className={style.textField}
+                  validate={[requiredField]} />
+            </div>
+            {/* <div>
             <Field component={"input"} type={"checkbox"} name={"rememberMe"} /> remember me
-         </div>
-         {error &&
-            (<div className={style.error_common}>
-               {error}
-            </div>)}
+         </div> */}
+            {error &&
+               (<div className={style.error_common}>
+                  {error}
+               </div>)}
 
-         <div>
-            <button>Login</button>
+            <div>
+               <button className='btn btn-small'>Login</button>
+            </div>
          </div>
       </form>
    )
@@ -55,7 +57,7 @@ const Login: React.FC<mapStateToPropsType & mapDispatchToPropsType> = (props) =>
    }
    return (
       <div>
-         <h1>Login</h1>
+         <h1 style={{ opacity: 0 }}>Login</h1>
          <LoginReduxForm onSubmit={onSubmit} />
       </div>
    )

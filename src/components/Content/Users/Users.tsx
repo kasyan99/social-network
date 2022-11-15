@@ -9,6 +9,7 @@ import Preloader from "../../common/Preloader"
 import Paginator from "./Paginator"
 import User from "./User/User"
 import classes from './Users.module.css'
+import formClasses from '../../common/FormsControls/FormsControls.module.css'
 
 const Users: React.FC = () => {
 
@@ -131,14 +132,14 @@ const UsersSearchForm: React.FC<UsersSearchFormPropsType> = (props) => {
             handleSubmit,
             handleChange
          }) => (
-            <form onSubmit={handleSubmit}>
-               <Field type="text" name="filterByName" placeholder="Search by name" onChange={handleChange} />
-               <Field as="select" name="filterByFollow">
+            <form onSubmit={handleSubmit} className={classes.userForm}>
+               <Field type="text" name="filterByName" placeholder="Search by name" onChange={handleChange} className={formClasses.textField} />
+               <Field as="select" name="filterByFollow" className={formClasses.textField}>
                   <option value="all">All</option>
                   <option value="true">Followed</option>
                   <option value="false">Unfollowed</option>
                </Field>
-               <button type="submit">
+               <button type="submit" className="btn btn-small" style={{ height: 'calc(2.25rem + 2px)' }}>
                   Submit
                </button>
             </form>
