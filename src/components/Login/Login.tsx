@@ -25,6 +25,9 @@ const LoginForm: React.FC<InjectedFormProps> = ({ handleSubmit, error }) => {
             {/* <div>
             <Field component={"input"} type={"checkbox"} name={"rememberMe"} /> remember me
          </div> */}
+            <div style={{ color: "green", position: 'absolute', right: '24%', top: '10%' }}>
+               login: admin <br /> password: admin
+            </div>
             {error &&
                (<div className={style.error_common}>
                   {error}
